@@ -1,21 +1,13 @@
-import { Link } from "react-router-dom";
 import ThemeSwitch from "./ThemeSwitch";
+import scrollToSection from "../utils/scrollToSection";
 
 export default function Navigation() {
   return (
-    <nav className="flex items-center justify-between p-4">
-      <div>
-        {/* Link to Home, which has the fullpage sections */}
-        <Link to="/" className="mr-4">
-          Home
-        </Link>
-        {/* Link to the Blog index page */}
-        <Link to="/blog" className="mr-4">
-          Blog
-        </Link>
-      </div>
-
-      {/* Toggle Theme */}
+    <nav className="sticky top-0 left-0 w-full z-50 bg-white dark:bg-gray-900 p-4 flex items-center justify-between">
+      <button onClick={() => scrollToSection("profile")}>Profile</button>
+      <button onClick={() => scrollToSection("projects")}>Projects</button>
+      <button onClick={() => scrollToSection("blog")}>Blog</button>
+      <button onClick={() => scrollToSection("contact")}>Contact</button>
       <ThemeSwitch />
     </nav>
   );
