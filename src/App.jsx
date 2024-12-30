@@ -1,9 +1,10 @@
-function App() {
+import { ThemeProvider } from "./Context/ThemeContext";
+import AppRouter from "./router/AppRouter";
+
+export default function App() {
   return (
-    <div className="h-screen bg-blue-500 flex justify-center items-center text-white">
-      <h1 className="text-3xl font-bold">Hello, Tailwind!</h1>
-    </div>
+    <ThemeProvider>
+      <AppRouter />
+    </ThemeProvider>
   );
 }
-
-export default App;
