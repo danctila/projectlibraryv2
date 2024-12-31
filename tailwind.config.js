@@ -4,9 +4,9 @@ export default {
   darkMode: 'class',
   theme: {
     screens: {
-      mobile: '393px',
-      tablet: '834px',
-      desktop: '1440px',
+      'mobile': '393px',    
+      'tablet': '834px',    
+      'desktop': '1440px',
     },
     extend: {
       fontFamily: {
