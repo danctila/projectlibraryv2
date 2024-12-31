@@ -88,7 +88,7 @@ export default function Navigation() {
 
         {/* Hamburger Menu */}
         <button
-          className="tablet:flex mobile:flex desktop:hidden flex-col items-center justify-center w-10 h-10 rounded gap-1"
+          className="flex tablet:flex mobile:flex desktop:hidden flex-col items-center justify-center w-10 h-10 rounded gap-1"
           onClick={toggleMenu}
         >
           <span className="block w-6 h-[2px] bg-black dark:bg-white"></span>
