@@ -9,7 +9,7 @@ export default function ProjectsSection() {
   ];
 
   return (
-    <section className="p-4">
+    <section className="min-h-[calc(100vh-4rem)] snap-start pt-16">
       <h1 className="text-2xl">Projects Section</h1>
       <p>This is a carousel of projects (simplified here).</p>
       <div className="mt-4 flex space-x-4">

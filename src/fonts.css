@@ -1,0 +1,89 @@
+/* Bold */
+@font-face {
+  font-family: "Neue Regrade";
+  src: url("/src/assets/fonts/Neue Regrade Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Bold Italic */
+@font-face {
+  font-family: "Neue Regrade";
+  src: url("/src/assets/fonts/Neue Regrade Bold Italic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* ExtraBold */
+@font-face {
+  font-family: "Neue Regrade";
+  src: url("/src/assets/fonts/Neue Regrade Extrabold.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+/* Light */
+@font-face {
+  font-family: "Neue Regrade";
+  src: url("/src/assets/fonts/Neue Regrade Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* Light Italic */
+@font-face {
+  font-family: "Neue Regrade";
+  src: url("/src/assets/fonts/Neue Regrade Light Italic.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+}
+
+/* Medium */
+@font-face {
+  font-family: "Neue Regrade";
+  src: url("/src/assets/fonts/Neue Regrade Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Regular */
+@font-face {
+  font-family: "Neue Regrade";
+  src: url("/src/assets/fonts/Neue Regrade Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Regular Italic */
+@font-face {
+  font-family: "Neue Regrade";
+  src: url("/src/assets/fonts/Neue Regrade Regular Italic.otf")
+    format("opentype");
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* SemiBold */
+@font-face {
+  font-family: "Neue Regrade";
+  src: url("/src/assets/fonts/Neue Regrade Semibold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* SemiBold Italic */
+@font-face {
+  font-family: "Neue Regrade";
+  src: url("/src/assets/fonts/Neue Regrade SemiBold Italic.otf")
+    format("opentype");
+  font-weight: 600;
+  font-style: italic;
+}
+
+/* Variable Font */
+@font-face {
+  font-family: "Neue Regrade";
+  src: url("/src/assets/fonts/Neue Regrade Variable.otf") format("opentype");
+  font-weight: 100 900; /* Variable font supports a range of weights */
+  font-style: normal;
+}

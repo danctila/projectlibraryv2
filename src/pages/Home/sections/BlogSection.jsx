@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 
 export default function BlogSection() {
-  // Optionally show a couple featured blog posts
   return (
-    <section className="p-4">
+    <section className="min-h-[calc(100vh-4rem)] snap-start pt-16">
       <h1 className="text-2xl">Blog Section</h1>
       <p>Here you could show a featured blog post snippet.</p>
 
