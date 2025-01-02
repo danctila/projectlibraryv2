@@ -1,4 +1,4 @@
-export default function ProjectsSection() {
+export default function ContactSection() {
   return (
     <section className="min-h-screen snap-start bg-[#FBFBFB] dark:bg-[#262329] font-neue flex items-center justify-center">
       <div className="max-w-[1915px] mx-auto px-[30px] tablet:px-[100px] desktop:px-[130px] w-full">
