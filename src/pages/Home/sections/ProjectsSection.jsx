@@ -108,14 +108,18 @@ export default function ProjectsSection() {
             {projects.map((project) => (
               <div key={project.id} className="mr-4 last:mr-0 w-[350px]">
                 <div className="flex flex-col items-start">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-[230px] rounded-[5px] object-cover"
-                  />
-                  <h2 className="mt-6 text-[32px] font-medium text-[#262329] dark:text-white">
-                    {project.title}
-                  </h2>
+                  <Link to={`/projects/${project.id}`} className="block">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-[230px] rounded-[5px] object-cover"
+                    />
+                  </Link>
+                  <Link to={`/projects/${project.id}`} className="block mt-6 ">
+                    <h2 className="text-[32px] font-medium text-[#262329] dark:text-white">
+                      {project.title}
+                    </h2>
+                  </Link>
                   <p className="mt-2 text-[20px] text-[#645E6E] dark:text-[#D8D6DC]">
                     {project.description}
                   </p>
