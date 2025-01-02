@@ -57,7 +57,11 @@ export default function Navigation() {
             <button
               key={section.id}
               onClick={() => scrollToSection(section.id)}
-              className="relative font-neue text-[20px] font-regular text-black dark:text-white focus:outline-none"
+              className={`relative font-neue text-[20px] font-regular focus:outline-none ${
+                activeSection === section.id
+                  ? "text-black dark:text-white"
+                  : "text-[#645E6E] dark:text-[#a59fac] hover:text-black dark:hover:text-white"
+              }`}
             >
               {section.label}
               {activeSection === section.id && (
@@ -150,34 +154,28 @@ export default function Navigation() {
             <div
               className="relative flex flex-col items-center space-y-[85px] Mobile:w-full Tablet:w-full px-4
       "
-              onClick={(e) => e.stopPropagation()} // Prevent propagation
+              onClick={(e) => e.stopPropagation()}
             >
               {/* Navigation Links */}
               {sections.map((section) => (
-                <motion.button
+                <button
                   key={section.id}
                   onClick={() => {
                     scrollToSection(section.id);
                     toggleMenu();
                   }}
-                  className="relative text-[20px] font-regular text-center focus:outline-none"
-                  whileHover="hover"
-                  initial="rest"
-                  animate="rest"
+                  className={`relative text-[20px] font-regular text-center focus:outline-none ${
+                    activeSection === section.id
+                      ? "text-black dark:text-white"
+                      : "text-[#645E6E] dark:text-[#a59fac] hover:text-black dark:hover:text-white"
+                  }`}
                 >
                   {section.label}
-
-                  {/* Animated Underline */}
-                  <motion.div
-                    variants={{
-                      rest: { scaleX: 0 },
-                      hover: { scaleX: 1 },
-                    }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="absolute bottom-0 left-0 right-0 h-[1px] bg-[#3AED7C] origin-center"
-                    style={{ transformOrigin: "center" }}
-                  />
-                </motion.button>
+                  {/* Underline */}
+                  {activeSection === section.id && (
+                    <div className="absolute bottom-[-2px] left-0 right-0 h-[1px] bg-[#3AED7C]" />
+                  )}
+                </button>
               ))}
 
               {/* Theme Switch */}
