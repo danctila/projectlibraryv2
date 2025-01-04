@@ -11,7 +11,7 @@ export default function DotNavigation() {
   ];
 
   return (
-    <div className="absolute right-3 top-1/2 flex-col space-y-[13px] -translate-y-1/2 z-10 hidden tablet:flex desktop:flex">
+    <div className="absolute right-3 flex-col space-y-[13px] pointer-events-auto z-10 hidden tablet:flex desktop:flex">
       {sections.map(({ id }) => {
         const isActive = id === activeSection;
         return (

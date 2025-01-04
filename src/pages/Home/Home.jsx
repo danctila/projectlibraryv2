@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from "react";
 import ProfileSection from "./sections/ProfileSection";
 import ProjectsSection from "./sections/ProjectsSection";
 import BlogSection from "./sections/BlogSection";
 import ContactSection from "./sections/ContactSection";
-import DotNavigation from "../../components/DotNavigation";
-import { useScroll } from "../../Context/ScrollContext";
 
 export default function Home() {
-  const { activeSection } = useScroll();
-
   return (
     <div className="relative w-screen h-screen">
       <div className="w-full h-full snap-y snap-mandatory scroll-smooth overflow-y-scroll hide-scrollbar">
@@ -25,7 +20,6 @@ export default function Home() {
           <ContactSection />
         </section>
       </div>
-      <DotNavigation />
     </div>
   );
 }

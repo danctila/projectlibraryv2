@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navigation from "../components/Navigation";
 import Loader from "../components/Loader";
 import { useScroll } from "../Context/ScrollContext";
+import SocialLinksOverlay from "../components/SocialLinksOverlay";
+import DotNavigation from "../components/DotNavigation";
 
 const sectionOrder = ["profile", "projects", "blog", "contact"];
 
@@ -62,6 +64,10 @@ export default function MainLayout({ children, navbarType }) {
     <div className="relative w-screen h-screen overflow-hidden">
       <Navigation />
       {loading ? <Loader /> : children}
+      <div className="absolute inset-0 flex items-center pointer-events-none ">
+        <DotNavigation />
+        <SocialLinksOverlay />
+      </div>
 
       {/* Next Section Overlay */}
       <div className="fixed bottom-0 w-full flex flex-col items-center">
@@ -106,6 +112,7 @@ export default function MainLayout({ children, navbarType }) {
     </div>
   );
 }
+// To do later:
 // for different nav bar layouts
 //   <div>
 //   {navbarType === "home" && <HomeNavBar />}
