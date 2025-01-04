@@ -1,4 +1,9 @@
+import { AnimatePresence, motion } from "framer-motion";
+import { useScroll } from "../../../Context/ScrollContext";
+
 export default function ProfileSection() {
+  const { activeSection } = useScroll();
+
   return (
     <div className="relative min-h-screen flex flex-col justify-center items-center bg-[#FBFBFB] dark:bg-[#262329]">
       <div className="flex flex-col desktop:flex-row items-center desktop:items-start desktop:space-x-8">
@@ -9,9 +14,19 @@ export default function ProfileSection() {
             <span className="hidden tablet:block desktop:block">Hey,</span>
             <span className="hidden tablet:block desktop:block">
               My name is{" "}
-              <span className="font-bold text-[#6E07F3] dark:text-[#8A34F9]">
-                Dylan Anctil
-              </span>
+              <AnimatePresence>
+                {activeSection === "profile" && (
+                  <motion.span
+                    initial={{ opacity: 1, y: 0 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    className="font-bold text-[#6E07F3] dark:text-[#8A34F9]"
+                  >
+                    Dylan Anctil
+                  </motion.span>
+                )}
+              </AnimatePresence>
             </span>
             {/* Mobile Layout */}
             <span className="block tablet:hidden desktop:hidden">

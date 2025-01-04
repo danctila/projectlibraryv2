@@ -11,6 +11,16 @@ export function ScrollProvider({ children }) {
   const isScrollingRef = useRef(false);
   const scrollTimeout = useRef(null);
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Handle scroll lock based on isMenuOpen
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
+
   useEffect(() => {
     const sections = document.querySelectorAll("section[id]");
     const observer = new IntersectionObserver(
@@ -65,7 +75,7 @@ export function ScrollProvider({ children }) {
 
   useEffect(() => {
     const handleWheel = (event) => {
-      if (isScrollingRef.current) {
+      if (isMenuOpen || isScrollingRef.current) {
         event.preventDefault();
         return;
       }
@@ -92,10 +102,12 @@ export function ScrollProvider({ children }) {
     return () => {
       window.removeEventListener("wheel", handleWheel);
     };
-  }, [activeSection]);
+  }, [activeSection, isMenuOpen]);
 
   return (
-    <ScrollContext.Provider value={{ activeSection, scrollToSection }}>
+    <ScrollContext.Provider
+      value={{ activeSection, scrollToSection, setIsMenuOpen }}
+    >
       {children}
     </ScrollContext.Provider>
   );

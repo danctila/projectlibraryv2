@@ -4,18 +4,18 @@ import { useScroll } from "../Context/ScrollContext";
 import { useState } from "react";
 
 export default function Navigation() {
-  const { activeSection, scrollToSection } = useScroll();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { activeSection, scrollToSection, setIsMenuOpen } = useScroll();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
     setIsMenuOpen((prev) => !prev);
+  };
 
-    // Lock or unlock scroll
-    if (!isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+  const closeMenuAndNavigate = (sectionId) => {
+    scrollToSection(sectionId);
+    setMenuOpen(false);
+    setIsMenuOpen(false);
   };
 
   const sections = [
@@ -45,10 +45,28 @@ export default function Navigation() {
   return (
     <>
       {/* Main Navigation */}
-      <nav className="fixed top-0 left-0 w-full z-50 bg-transparent transition-all duration-300 flex items-center justify-between px-6 py-4">
+      <nav className="fixed top-0 left-0 w-full z-[60] bg-transparent transition-all duration-300 flex items-center justify-between px-6 py-4">
         {/* Logo or Home Link */}
         <p className="font-neue font-bold italic dark:text-[#8A34F9] text-[#6E07F3] text-[32px]">
-          Dylan Anctil
+          <div className="relative z-[10]">
+            <AnimatePresence>
+              {!menuOpen && activeSection !== "profile" && (
+                <motion.p
+                  initial={{ opacity: 0, y: -50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 120,
+                    damping: 20,
+                  }}
+                  className="font-neue font-bold italic dark:text-[#8A34F9] text-[#6E07F3] text-[32px]"
+                >
+                  Dylan Anctil
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </div>
         </p>
 
         {/* Desktop Links */}
@@ -82,7 +100,7 @@ export default function Navigation() {
 
         {/* Hamburger / Minus Menu */}
         <button
-          className="flex tablet:flex mobile:flex desktop:hidden relative w-[28px] h-[50px] z-[60]"
+          className="flex tablet:flex mobile:flex desktop:hidden relative w-[28px] h-[50px] "
           onClick={toggleMenu}
         >
           {/* Line 1 */}
@@ -90,7 +108,7 @@ export default function Navigation() {
             className="absolute left-0 w-[28px] h-[2px] rounded-full bg-black dark:bg-white"
             custom={0} // top offset = 0
             variants={lineVariants}
-            animate={isMenuOpen ? "open" : "closed"}
+            animate={menuOpen ? "open" : "closed"}
             initial="closed"
             transition={{ duration: 0.2 }}
           />
@@ -100,7 +118,7 @@ export default function Navigation() {
             custom={6} // top offset = 6px
             style={{ top: 6 }}
             variants={lineVariants}
-            animate={isMenuOpen ? "open" : "closed"}
+            animate={menuOpen ? "open" : "closed"}
             initial="closed"
             transition={{ duration: 0.2 }}
           />
@@ -109,7 +127,7 @@ export default function Navigation() {
             className="absolute left-0 w-[28px] h-[2px] rounded-full bg-black dark:bg-white"
             style={{ top: 12 }}
             variants={middleLineVariants}
-            animate={isMenuOpen ? "open" : "closed"}
+            animate={menuOpen ? "open" : "closed"}
             initial="closed"
             transition={{ duration: 0.2 }}
           />
@@ -119,7 +137,7 @@ export default function Navigation() {
             custom={18} // top offset = 18px
             style={{ top: 18 }}
             variants={lineVariants}
-            animate={isMenuOpen ? "open" : "closed"}
+            animate={menuOpen ? "open" : "closed"}
             initial="closed"
             transition={{ duration: 0.2 }}
           />
@@ -129,7 +147,7 @@ export default function Navigation() {
             custom={24} // top offset = 24px
             style={{ top: 24 }}
             variants={lineVariants}
-            animate={isMenuOpen ? "open" : "closed"}
+            animate={menuOpen ? "open" : "closed"}
             initial="closed"
             transition={{ duration: 0.2 }}
           />
@@ -138,10 +156,10 @@ export default function Navigation() {
 
       {/* Mobile Menu */}
       <AnimatePresence>
-        {isMenuOpen && (
+        {menuOpen && (
           <motion.div
             className="
-      fixed inset-0 z-30 
+      fixed inset-0 z-50 
       bg-[#DEDDE2] dark:bg-[#3E3B45]
       flex flex-col items-center justify-start pt-40 dark:text-white light:text-black font-neue
     "
@@ -161,8 +179,7 @@ export default function Navigation() {
                 <button
                   key={section.id}
                   onClick={() => {
-                    scrollToSection(section.id);
-                    toggleMenu();
+                    closeMenuAndNavigate(section.id);
                   }}
                   className={`relative text-[20px] font-regular text-center focus:outline-none ${
                     activeSection === section.id
