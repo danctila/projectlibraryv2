@@ -3,7 +3,11 @@ import { createContext, useContext, useEffect, useRef, useState } from "react";
 const ScrollContext = createContext();
 
 export function ScrollProvider({ children }) {
-  const [activeSection, setActiveSection] = useState("profile");
+  // Active section from local storage or default to profile
+  const [activeSection, setActiveSection] = useState(() => {
+    return localStorage.getItem("activeSection") || "profile";
+  });
+
   const isScrollingRef = useRef(false);
   const scrollTimeout = useRef(null);
 
@@ -15,6 +19,7 @@ export function ScrollProvider({ children }) {
           if (entry.intersectionRatio >= 0.5 && !isScrollingRef.current) {
             const id = entry.target.getAttribute("id");
             setActiveSection(id);
+            localStorage.setItem("activeSection", id);
             window.history.replaceState({}, "", `#${id}`);
           }
         });
@@ -27,8 +32,11 @@ export function ScrollProvider({ children }) {
 
     sections.forEach((section) => observer.observe(section));
 
-    const initialHash = window.location.hash.replace("#", "") || "profile";
-    setActiveSection(initialHash);
+    const savedSection = localStorage.getItem("activeSection");
+    if (savedSection) {
+      const section = document.getElementById(savedSection);
+      if (section) section.scrollIntoView({ behavior: "smooth" });
+    }
 
     return () => {
       sections.forEach((section) => observer.unobserve(section));
@@ -41,6 +49,7 @@ export function ScrollProvider({ children }) {
     if (!section) return;
 
     setActiveSection(sectionId);
+    localStorage.setItem("activeSection", sectionId);
     window.history.replaceState({}, "", `#${sectionId}`);
 
     isScrollingRef.current = true;
