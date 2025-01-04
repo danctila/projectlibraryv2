@@ -115,7 +115,7 @@ export const ProjectCard = ({ project }) => {
             </h2>
           </Link>
           <p className="mt-2 text-[20px] text-[#645E6E] dark:text-[#D8D6DC]">
-            {project.description}
+            {project.short_description}
           </p>
           <Link
             to={`/projects/${project.id}`}

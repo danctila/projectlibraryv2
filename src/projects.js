@@ -1,4 +1,5 @@
 // Import the filler image if necessary
+import { s } from 'framer-motion/client';
 import filler from './assets/filler.jpg';
 
 // Define and export the projects array
@@ -7,6 +8,7 @@ const projects = [
     id: "1",
     title: "Project One",
     description: "Brief description...",
+    short_description: "Brief description...",
     image: filler,
     technologies: ["React", "TypeScript", "Tailwind CSS", "Node.js"],
   },
@@ -14,6 +16,7 @@ const projects = [
     id: "2",
     title: "Project Two",
     description: "Brief description...",
+    short_description: "Brief description...",
     image: filler,
     technologies: ["Next.js", "Firebase", "Tailwind CSS"],
   },
@@ -21,6 +24,7 @@ const projects = [
     id: "3",
     title: "Project Three",
     description: "Brief description...",
+    short_description: "Brief description...",
     image: filler,
     technologies: ["React", "Redux", "Styled Components"],
   },
@@ -28,6 +32,7 @@ const projects = [
     id: "4",
     title: "Project Four",
     description: "Brief description...",
+    short_description: "Brief description...",
     image: filler,
     technologies: ["Gatsby", "GraphQL", "Netlify"],
   },
@@ -35,6 +40,7 @@ const projects = [
     id: "5",
     title: "Project Five",
     description: "Brief description...",
+    short_description: "Brief description...",
     image: filler,
     technologies: ["Vue", "Nuxt.js", "Vercel"],
   },
