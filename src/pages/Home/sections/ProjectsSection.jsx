@@ -69,12 +69,9 @@ export default function ProjectsSection() {
         <div className="relative h-[470px]">
           {/* Flickity Carousel */}
           <div ref={carouselRef}>
-            {projects
-              .slice()
-              .reverse()
-              .map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
+            {projects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
           </div>
           {/* Navigation Arrows */}
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">

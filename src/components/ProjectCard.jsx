@@ -60,7 +60,7 @@ export const ProjectCard = ({ project }) => {
               transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
             >
               <img
-                src={project.image}
+                src={project.images[0]}
                 alt={project.title}
                 className="w-full h-[230px] object-cover"
               />
