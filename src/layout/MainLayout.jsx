@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 import { useScroll } from "../Context/ScrollContext";
 import SocialLinksOverlay from "../components/SocialLinksOverlay";
 import DotNavigation from "../components/navigation/DotNavigation";
+import ProjectIndexNavigation from "../components/navigation/ProjectIndexNavigation";
 
 const sectionOrder = ["profile", "projects", "blog", "contact"];
 
@@ -66,7 +67,9 @@ export default function MainLayout({ children, navbarType }) {
         isHomePage ? "overflow-hidden" : "overflow-auto hide-scrollbar"
       }`}
     >
-      <Navigation />
+      {navbarType === "home" && <Navigation />}
+      {navbarType === "project-index" && <ProjectIndexNavigation />}
+
       {loading ? <Loader /> : children}
       {isHomePage && (
         <>
