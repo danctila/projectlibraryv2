@@ -105,14 +105,17 @@ export default function ProjectIndex() {
 
         {/* Projects List with Flexbox */}
         <div className="flex flex-wrap justify-center items-center gap-6 tablet:pl-[78px] desktop:pl-0">
-          {filteredProjects.map((project) => (
-            <div
-              key={project.id}
-              className="flex-grow basis-[280px] max-w-[500px] mx-auto transition-all duration-300 ease-in-out"
-            >
-              <ProjectCard project={project} />
-            </div>
-          ))}
+          {filteredProjects
+            .slice()
+            .reverse()
+            .map((project) => (
+              <div
+                key={project.id}
+                className="flex-grow basis-[280px] max-w-[500px] mx-auto transition-all duration-300 ease-in-out"
+              >
+                <ProjectCard project={project} />
+              </div>
+            ))}
 
           {/* Empty State */}
           {filteredProjects.length === 0 && (
