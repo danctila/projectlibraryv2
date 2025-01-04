@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import Navigation from "../components/Navigation";
+import Navigation from "../components/navigation/Navigation";
 import Loader from "../components/Loader";
 import { useScroll } from "../Context/ScrollContext";
 import SocialLinksOverlay from "../components/SocialLinksOverlay";
-import DotNavigation from "../components/DotNavigation";
+import DotNavigation from "../components/navigation/DotNavigation";
 
 const sectionOrder = ["profile", "projects", "blog", "contact"];
 
@@ -61,54 +61,66 @@ export default function MainLayout({ children, navbarType }) {
   };
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden">
+    <div
+      className={`relative w-screen h-screen ${
+        isHomePage ? "overflow-hidden" : "overflow-auto hide-scrollbar"
+      }`}
+    >
       <Navigation />
       {loading ? <Loader /> : children}
-      <div className="absolute inset-0 flex items-center pointer-events-none ">
-        <DotNavigation />
-        <SocialLinksOverlay />
-      </div>
+      {isHomePage && (
+        <>
+          <div className="absolute inset-0 flex items-center pointer-events-none ">
+            <DotNavigation />
+            <SocialLinksOverlay />
+          </div>
 
-      {/* Next Section Overlay */}
-      <div className="fixed bottom-0 w-full flex flex-col items-center">
-        <AnimatePresence mode="wait">
-          {nextSectionText && (
-            <motion.div
-              key={nextSectionText}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              style={{ cursor: "pointer" }}
-              transition={{ type: "spring", stiffness: 120, damping: 15 }}
-              className="flex flex-col items-center"
-              onClick={handleNextClick}
-            >
-              {/* Section Text */}
-              <p className="font-neue text-[20px] font-normal text-[#262329] dark:text-[#FBFBFB] mb-2">
-                {nextSectionText.toUpperCase()}
-              </p>
-
-              {/* Clickable SVG */}
-              {nextSectionText !== "THANK YOU" && (
-                <svg
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 150 150"
-                  style={{ width: "29px", height: "29px", cursor: "pointer" }}
-                  xmlSpace="preserve"
-                  className="fill-[#262329] dark:fill-[#FBFBFB]"
+          {/* Next Section Overlay */}
+          <div className="fixed bottom-0 w-full flex flex-col items-center">
+            <AnimatePresence mode="wait">
+              {nextSectionText && (
+                <motion.div
+                  key={nextSectionText}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  style={{ cursor: "pointer" }}
+                  transition={{ type: "spring", stiffness: 120, damping: 15 }}
+                  className="flex flex-col items-center"
                   onClick={handleNextClick}
                 >
-                  <polygon
-                    id="XMLID_818_"
-                    points="0,0 0,150 30.002,150 30.002,60 120.669,60 120.669,150 150,150 150,0"
-                  />
-                </svg>
+                  {/* Section Text */}
+                  <p className="font-neue text-[20px] font-normal text-[#262329] dark:text-[#FBFBFB] mb-2">
+                    {nextSectionText.toUpperCase()}
+                  </p>
+
+                  {/* Clickable SVG */}
+                  {nextSectionText !== "THANK YOU" && (
+                    <svg
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 150 150"
+                      style={{
+                        width: "29px",
+                        height: "29px",
+                        cursor: "pointer",
+                      }}
+                      xmlSpace="preserve"
+                      className="fill-[#262329] dark:fill-[#FBFBFB]"
+                      onClick={handleNextClick}
+                    >
+                      <polygon
+                        id="XMLID_818_"
+                        points="0,0 0,150 30.002,150 30.002,60 120.669,60 120.669,150 150,150 150,0"
+                      />
+                    </svg>
+                  )}
+                </motion.div>
               )}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+            </AnimatePresence>
+          </div>
+        </>
+      )}
     </div>
   );
 }

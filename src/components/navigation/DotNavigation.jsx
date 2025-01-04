@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useScroll } from "../Context/ScrollContext";
+import { useScroll } from "../../Context/ScrollContext";
 
 export default function DotNavigation() {
   const { activeSection, scrollToSection } = useScroll();

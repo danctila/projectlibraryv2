@@ -1,6 +1,6 @@
-import ThemeSwitch from "./ThemeSwitch";
+import ThemeSwitch from "../ThemeSwitch";
 import { AnimatePresence, motion } from "framer-motion";
-import { useScroll } from "../Context/ScrollContext";
+import { useScroll } from "../../Context/ScrollContext";
 import { useState } from "react";
 
 export default function Navigation() {

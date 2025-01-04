@@ -3,50 +3,12 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Flickity from "flickity";
 import "flickity/css/flickity.css";
-import filler from "../../../assets/filler.jpg";
+import projects from "../../../projects";
 import { ProjectCard } from "../../../components/ProjectCard";
 
 export default function ProjectsSection() {
   const carouselRef = useRef(null);
   const flickityRef = useRef(null);
-
-  const projects = [
-    {
-      id: "1",
-      title: "Project One",
-      description: "Brief description...",
-      image: filler,
-      technologies: ["React", "TypeScript", "Tailwind CSS", "Node.js"],
-    },
-    {
-      id: "2",
-      title: "Project Two",
-      description: "Brief description...",
-      image: filler,
-      technologies: ["Next.js", "Firebase", "Tailwind CSS"],
-    },
-    {
-      id: "3",
-      title: "Project Three",
-      description: "Brief description...",
-      image: filler,
-      technologies: ["React", "Redux", "Styled Components"],
-    },
-    {
-      id: "4",
-      title: "Project Four",
-      description: "Brief description...",
-      image: filler,
-      technologies: ["Gatsby", "GraphQL", "Netlify"],
-    },
-    {
-      id: "5",
-      title: "Project Five",
-      description: "Brief description...",
-      image: filler,
-      technologies: ["Vue", "Nuxt.js", "Vercel"],
-    },
-  ];
 
   useEffect(() => {
     flickityRef.current = new Flickity(carouselRef.current, {

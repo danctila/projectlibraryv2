@@ -5,9 +5,7 @@ import AppRouter from "./router/AppRouter";
 export default function App() {
   return (
     <ThemeProvider>
-      <ScrollProvider>
-        <AppRouter />
-      </ScrollProvider>
+      <AppRouter />
     </ThemeProvider>
   );
 }
