@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion } from "framer-motion";
 import projects from "../../projects";
 import { ProjectCard } from "../../components/ProjectCard";
@@ -10,9 +10,11 @@ export default function ProjectIndex() {
   const listRef = useRef(null);
 
   // Get unique technologies
-  const allTechnologies = [
-    ...new Set(projects.flatMap((project) => project.technologies)),
-  ].sort();
+  const allTechnologies = useMemo(
+    () =>
+      [...new Set(projects.flatMap((project) => project.technologies))].sort(),
+    [projects]
+  );
 
   // Toggle selected technologies
   const toggleTechnology = (tech) => {
@@ -39,7 +41,7 @@ export default function ProjectIndex() {
     updateDragConstraints();
     window.addEventListener("resize", updateDragConstraints);
     return () => window.removeEventListener("resize", updateDragConstraints);
-  }, [allTechnologies]);
+  }, []);
 
   // Filter projects based on selected technologies
   const filteredProjects =
