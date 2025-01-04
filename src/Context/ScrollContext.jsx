@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-} from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 const ScrollContext = createContext();
 
@@ -15,11 +9,9 @@ export function ScrollProvider({ children }) {
 
   useEffect(() => {
     const sections = document.querySelectorAll("section[id]");
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // Only update if we're not in a programmatic scroll
           if (entry.intersectionRatio >= 0.5 && !isScrollingRef.current) {
             const id = entry.target.getAttribute("id");
             setActiveSection(id);
@@ -28,7 +20,7 @@ export function ScrollProvider({ children }) {
         });
       },
       {
-        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+        threshold: [0.5], // Trigger when at least 50% of a section is visible
         rootMargin: "-10% 0px -10% 0px",
       }
     );
@@ -48,23 +40,50 @@ export function ScrollProvider({ children }) {
     const section = document.getElementById(sectionId);
     if (!section) return;
 
-    // Set the active section immediately for UI purposes
     setActiveSection(sectionId);
     window.history.replaceState({}, "", `#${sectionId}`);
 
-    // Set the scrolling flag
     isScrollingRef.current = true;
 
     section.scrollIntoView({ behavior: "smooth" });
 
-    // Clear any existing timeout
     if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
 
-    // Reset the scrolling flag after the scroll animation should be complete
     scrollTimeout.current = setTimeout(() => {
       isScrollingRef.current = false;
-    }, 1000); // Adjust this value based on your scroll animation duration
+    }, 800);
   };
+
+  useEffect(() => {
+    const handleWheel = (event) => {
+      if (isScrollingRef.current) {
+        event.preventDefault();
+        return;
+      }
+
+      const direction = event.deltaY > 0 ? 1 : -1;
+      const currentIndex = Array.from(
+        document.querySelectorAll("section[id]")
+      ).findIndex((section) => section.id === activeSection);
+      const nextIndex = Math.min(
+        Math.max(0, currentIndex + direction),
+        document.querySelectorAll("section[id]").length - 1
+      );
+
+      if (nextIndex !== currentIndex) {
+        const nextSectionId =
+          document.querySelectorAll("section[id]")[nextIndex].id;
+        scrollToSection(nextSectionId);
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+    };
+  }, [activeSection]);
 
   return (
     <ScrollContext.Provider value={{ activeSection, scrollToSection }}>
