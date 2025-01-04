@@ -5,7 +5,16 @@ const ProjectIndexNavigation = () => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
+    // Navigate to the root URL
     navigate("/#projects");
+
+    // Add a delay before scrolling to ensure the page content is fully loaded
+    setTimeout(() => {
+      const projectsSection = document.querySelector("#projects");
+      if (projectsSection) {
+        projectsSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100); // Adjust the delay as needed
   };
 
   return (
