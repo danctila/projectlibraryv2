@@ -1,23 +1,36 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import projects from "../../projects";
 import { ProjectCard } from "../../components/ProjectCard";
 
 export default function ProjectIndex() {
-  const [selectedTech, setSelectedTech] = useState("");
+  const [selectedTech, setSelectedTech] = useState([]);
 
   // Get unique technologies
   const allTechnologies = [
     ...new Set(projects.flatMap((project) => project.technologies)),
   ].sort();
 
-  // Filter projects based on selected technology
-  const filteredProjects = selectedTech
-    ? projects.filter((project) => project.technologies.includes(selectedTech))
-    : projects;
+  // Toggle selected technologies
+  const toggleTechnology = (tech) => {
+    setSelectedTech((prevSelected) =>
+      prevSelected.includes(tech)
+        ? prevSelected.filter((t) => t !== tech)
+        : [...prevSelected, tech]
+    );
+  };
+
+  // Filter projects based on selected technologies
+  const filteredProjects =
+    selectedTech.length > 0
+      ? projects.filter((project) =>
+          selectedTech.some((tech) => project.technologies.includes(tech))
+        )
+      : projects;
 
   return (
     <section className="min-h-screen snap-start bg-[#FBFBFB] dark:bg-[#262329] font-neue">
-      <div className="max-w-[1915px] mx-auto px-[30px] tablet:px-[100px] desktop:px-[130px] w-full py-16">
+      <div className="mx-auto px-[30px] tablet:px-[30px] desktop:px-[130px] w-full py-16">
         {/* Section Header */}
         <div className="mb-10">
           <h1 className="text-[40px] font-normal text-[#262329] dark:text-white pb-[8px]">
@@ -28,27 +41,57 @@ export default function ProjectIndex() {
           </p>
         </div>
 
-        {/* Technology Filter */}
-        <div className="mb-8">
-          <select
-            value={selectedTech}
-            onChange={(e) => setSelectedTech(e.target.value)}
-            className="px-4 py-2 rounded-lg bg-white dark:bg-[#2D2A31] text-[#262329] dark:text-white border border-[#E5E5E5] dark:border-[#363139] focus:outline-none focus:ring-2 focus:ring-[#645E6E] dark:focus:ring-[#D8D6DC]"
+        {/* Technology Filter Carousel */}
+        <div className="mb-8 relative p-4 rounded-lg border border-[#645E6E] dark:border-[#D8D6DC] bg-[#f5f5f5] dark:bg-[#262329] overflow-hidden">
+          <p className="text-[#645E6E] dark:text-[#D8D6DC] mb-4">
+            Filter by Technologies:
+          </p>
+          <motion.div
+            drag="x"
+            // Lower left value to increase drag distance
+            dragConstraints={{ left: -400, right: 0 }}
+            className="flex space-x-4 cursor-grab"
+            initial={{ x: 0 }}
+            animate={{ x: [0, -10, 0] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
           >
-            <option value="">All Technologies</option>
             {allTechnologies.map((tech) => (
-              <option key={tech} value={tech}>
+              <motion.button
+                key={tech}
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => toggleTechnology(tech)}
+                className={`px-4 py-2 rounded-full border border-[#645E6E] dark:border-[#D8D6DC] text-sm 
+                ${
+                  selectedTech.includes(tech)
+                    ? "bg-[#645E6E] text-white"
+                    : "bg-transparent text-[#645E6E] dark:text-[#D8D6DC]"
+                } 
+                transition-colors duration-300`}
+              >
                 {tech}
-              </option>
+              </motion.button>
             ))}
-          </select>
+          </motion.div>
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-8">
+        {/* Projects List with Flexbox */}
+        <div className="flex flex-wrap justify-center items-center gap-6 tablet:pl-[78px] desktop:pl-0">
           {filteredProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <div
+              key={project.id}
+              className="flex-grow basis-[280px] max-w-[500px] mx-auto transition-all duration-300 ease-in-out"
+            >
+              <ProjectCard project={project} />
+            </div>
           ))}
+
+          {/* Empty State */}
+          {filteredProjects.length === 0 && (
+            <div className="w-full text-center py-12 text-[#645E6E] dark:text-[#D8D6DC]">
+              No projects found with the selected technologies.
+            </div>
+          )}
         </div>
       </div>
     </section>
