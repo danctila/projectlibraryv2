@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Flickity from "flickity";
 import "flickity/css/flickity.css";
 import filler from "../../../assets/filler.jpg";
+import { ProjectCard } from "../../../components/ProjectCard";
 
 export default function ProjectsSection() {
   const carouselRef = useRef(null);
@@ -15,42 +16,35 @@ export default function ProjectsSection() {
       title: "Project One",
       description: "Brief description...",
       image: filler,
+      technologies: ["React", "TypeScript", "Tailwind CSS", "Node.js"],
     },
     {
       id: "2",
       title: "Project Two",
       description: "Brief description...",
       image: filler,
+      technologies: ["Next.js", "Firebase", "Tailwind CSS"],
     },
     {
       id: "3",
       title: "Project Three",
       description: "Brief description...",
       image: filler,
+      technologies: ["React", "Redux", "Styled Components"],
     },
     {
       id: "4",
       title: "Project Four",
       description: "Brief description...",
       image: filler,
+      technologies: ["Gatsby", "GraphQL", "Netlify"],
     },
     {
       id: "5",
       title: "Project Five",
       description: "Brief description...",
       image: filler,
-    },
-    {
-      id: "6",
-      title: "Project Six",
-      description: "Brief description...",
-      image: filler,
-    },
-    {
-      id: "7",
-      title: "Project Seven",
-      description: "Brief description...",
-      image: filler,
+      technologies: ["Vue", "Nuxt.js", "Vercel"],
     },
   ];
 
@@ -106,31 +100,7 @@ export default function ProjectsSection() {
           {/* Flickity Carousel */}
           <div ref={carouselRef}>
             {projects.map((project) => (
-              <div key={project.id} className="mr-4 last:mr-0 w-[350px]">
-                <div className="flex flex-col items-start">
-                  <Link to={`/projects/${project.id}`} className="block">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-[230px] rounded-[5px] object-cover"
-                    />
-                  </Link>
-                  <Link to={`/projects/${project.id}`} className="block mt-6 ">
-                    <h2 className="text-[32px] font-medium text-[#262329] dark:text-white">
-                      {project.title}
-                    </h2>
-                  </Link>
-                  <p className="mt-2 text-[20px] text-[#645E6E] dark:text-[#D8D6DC]">
-                    {project.description}
-                  </p>
-                  <Link
-                    to={`/projects/${project.id}`}
-                    className="mt-4 text-[16px] text-[#3AED7C] hover:underline"
-                  >
-                    SEE MORE
-                  </Link>
-                </div>
-              </div>
+              <ProjectCard key={project.id} project={project} />
             ))}
           </div>
           {/* Navigation Arrows */}
