@@ -1,10 +1,13 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import projects from "../../projects";
 import { ProjectCard } from "../../components/ProjectCard";
 
 export default function ProjectIndex() {
   const [selectedTech, setSelectedTech] = useState([]);
+  const [dragConstraints, setDragConstraints] = useState({ left: 0, right: 0 });
+  const containerRef = useRef(null);
+  const listRef = useRef(null);
 
   // Get unique technologies
   const allTechnologies = [
@@ -19,6 +22,24 @@ export default function ProjectIndex() {
         : [...prevSelected, tech]
     );
   };
+
+  const updateDragConstraints = () => {
+    if (containerRef.current && listRef.current) {
+      const containerWidth = containerRef.current.offsetWidth;
+      const listWidth = listRef.current.scrollWidth;
+      const leftConstraint = containerWidth - listWidth - 30;
+      setDragConstraints({
+        left: leftConstraint < 0 ? leftConstraint : 0,
+        right: 0,
+      });
+    }
+  };
+
+  useEffect(() => {
+    updateDragConstraints();
+    window.addEventListener("resize", updateDragConstraints);
+    return () => window.removeEventListener("resize", updateDragConstraints);
+  }, [allTechnologies]);
 
   // Filter projects based on selected technologies
   const filteredProjects =
@@ -42,36 +63,41 @@ export default function ProjectIndex() {
         </div>
 
         {/* Technology Filter Carousel */}
-        <div className="mb-8 relative p-4 rounded-lg border border-[#645E6E] dark:border-[#D8D6DC] bg-[#f5f5f5] dark:bg-[#262329] overflow-hidden">
+        <div
+          className="mb-8 relative p-4 rounded-lg border border-[#645E6E] dark:border-[#D8D6DC] bg-[#f5f5f5] dark:bg-[#262329] overflow-hidden"
+          ref={containerRef}
+        >
           <p className="text-[#645E6E] dark:text-[#D8D6DC] mb-4">
             Filter by Technologies:
           </p>
           <motion.div
+            ref={listRef}
             drag="x"
-            // Lower left value to increase drag distance
-            dragConstraints={{ left: -400, right: 0 }}
-            className="flex space-x-4 cursor-grab"
+            dragConstraints={dragConstraints}
+            className="flex space-x-4 cursor-grab active:cursor-grabbing touch-none"
             initial={{ x: 0 }}
             animate={{ x: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
           >
-            {allTechnologies.map((tech) => (
-              <motion.button
-                key={tech}
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => toggleTechnology(tech)}
-                className={`px-4 py-2 rounded-full border border-[#645E6E] dark:border-[#D8D6DC] text-sm 
-                ${
-                  selectedTech.includes(tech)
-                    ? "bg-[#645E6E] text-white"
-                    : "bg-transparent text-[#645E6E] dark:text-[#D8D6DC]"
-                } 
-                transition-colors duration-300`}
-              >
-                {tech}
-              </motion.button>
-            ))}
+            <div className="flex space-x-4 items-center">
+              {allTechnologies.map((tech) => (
+                <motion.button
+                  key={tech}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => toggleTechnology(tech)}
+                  className={`px-4 py-2 rounded-full border border-[#645E6E] dark:border-[#D8D6DC] text-sm 
+                  ${
+                    selectedTech.includes(tech)
+                      ? "bg-[#645E6E] text-white"
+                      : "bg-transparent text-[#645E6E] dark:text-[#D8D6DC]"
+                  } 
+                  transition-colors duration-300`}
+                >
+                  {tech}
+                </motion.button>
+              ))}
+            </div>
           </motion.div>
         </div>
 
