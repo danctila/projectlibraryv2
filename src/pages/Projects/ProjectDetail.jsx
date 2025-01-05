@@ -1,15 +1,14 @@
 import { useParams } from "react-router-dom";
-import ProjectDetailNavigation from "../../components/navigation/ProjectDetailNavigation";
+import { projectDetailsMap } from "./ProjectDetailRoutes";
+import NotFound from "../NotFound";
 
-export default function ProjectDetail() {
+export const ProjectDetail = () => {
   const { projectId } = useParams();
+  const ProjectDetailComponent = projectDetailsMap[projectId];
 
-  // In a real app, fetch or load the project data by ID here.
-  return (
-    <div className="p-4">
-      <h1 className="text-3xl mb-2">Project Detail</h1>
-      <p>Showing details for project: {projectId}</p>
-      {/* Add images, video, description, etc. */}
-    </div>
-  );
-}
+  if (!ProjectDetailComponent) {
+    return <NotFound />; // Fallback for invalid project IDs
+  }
+
+  return <ProjectDetailComponent />;
+};

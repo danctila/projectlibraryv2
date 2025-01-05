@@ -7,6 +7,7 @@ import { useScroll } from "../Context/ScrollContext";
 import SocialLinksOverlay from "../components/SocialLinksOverlay";
 import DotNavigation from "../components/navigation/DotNavigation";
 import ProjectIndexNavigation from "../components/navigation/ProjectIndexNavigation";
+import ProjectDetailNavigation from "../components/navigation/ProjectDetailNavigation";
 
 const sectionOrder = ["profile", "projects", "blog", "contact"];
 
@@ -69,6 +70,7 @@ export default function MainLayout({ children, navbarType }) {
     >
       {navbarType === "home" && <Navigation />}
       {navbarType === "project-index" && <ProjectIndexNavigation />}
+      {navbarType === "project-detail" && <ProjectDetailNavigation />}
 
       {loading ? <Loader /> : children}
       {isHomePage && (
