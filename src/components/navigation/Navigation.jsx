@@ -45,7 +45,7 @@ export default function Navigation() {
   return (
     <>
       {/* Main Navigation */}
-      <nav className="fixed top-0 left-0 w-full z-[60] bg-transparent transition-all duration-300 flex items-center justify-between px-6 py-4">
+      <nav className="fixed top-0 left-0 w-full z-[60] bg-transparent transition-all duration-300 flex items-center justify-between px-6 py-4 h-[80px]">
         {/* Logo or Home Link */}
         <p className="font-neue font-bold italic dark:text-[#8A34F9] text-[#6E07F3] text-[32px]">
           <div className="relative z-[10]">

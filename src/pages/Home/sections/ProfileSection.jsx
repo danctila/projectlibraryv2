@@ -45,7 +45,7 @@ export default function ProfileSection() {
             <span className="hidden tablet:block desktop:block">Hey,</span>
             <span className="hidden tablet:block desktop:block">
               My name is{" "}
-              <AnimatePresence>
+              <AnimatePresence mode="wait">
                 {activeSection === "profile" && (
                   <motion.span
                     initial={{ opacity: 1, y: 0 }}
@@ -77,6 +77,7 @@ export default function ProfileSection() {
             something meaningful.
           </motion.p>
         </motion.div>
+
         {/* Image + Border Section */}
         <motion.div
           className="mt-6 tablet:mt-8 desktop:mt-0"
@@ -90,7 +91,7 @@ export default function ProfileSection() {
             delay: 0.4,
           }}
         >
-          <div className="relative w-[270px] h-[270px] mobile:w-[270px] mobile:h-[270px] tablet:w-[400px] tablet:h-[400px] desktop:w-[400px] desktop:h-[400px]">
+          <div className="relative w-[270px] h-[270px] mobile:w-[270px] mobile:h-[270px] tablet:w-[400px] tablet:h-[400px] desktop:w-[400px] desktop:h-[400px] ">
             <motion.div
               className="absolute -top-2 -left-2 w-full h-full border-[1px] border-[#6E07F3] dark:border-[#8A34F9]"
               initial={{ scale: 0.95, opacity: 0 }}
@@ -101,7 +102,7 @@ export default function ProfileSection() {
             <motion.img
               src={headshot}
               alt="headshot"
-              className="bg-gray-300 dark:bg-gray-600 w-full h-full"
+              className="absolute w-full h-full object-cover"
               initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: false, amount: 0.3 }}
