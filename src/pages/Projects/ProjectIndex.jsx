@@ -3,6 +3,19 @@ import { motion } from "framer-motion";
 import projects from "../../projects";
 import { ProjectCard } from "../../components/ProjectCard";
 
+const textVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 20,
+    },
+  },
+};
+
 export default function ProjectIndex() {
   const [selectedTech, setSelectedTech] = useState([]);
   const [dragConstraints, setDragConstraints] = useState({ left: 0, right: 0 });
@@ -53,25 +66,48 @@ export default function ProjectIndex() {
 
   return (
     <section className="min-h-screen snap-start bg-[#FBFBFB] dark:bg-[#262329] font-neue">
-      <div className="mx-auto px-[30px] tablet:px-[30px] desktop:px-[130px] w-full py-16">
+      <motion.div
+        className="mx-auto px-[30px] tablet:px-[30px] desktop:px-[130px] w-full py-16"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.3 }}
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.2,
+            },
+          },
+        }}
+      >
+        {" "}
         {/* Section Header */}
         <div className="mb-10">
-          <h1 className="text-[40px] font-normal text-[#262329] dark:text-white pb-[8px]">
+          <motion.h1
+            variants={textVariants}
+            className="text-[40px] font-normal text-[#262329] dark:text-white pb-[8px]"
+          >
             Projects
-          </h1>
-          <p className="text-[20px] text-[#645E6E] dark:text-[#D8D6DC] leading-[25px] w-[310px] tablet:w-[450px] desktop:w-[450px] pb-[32px]">
+          </motion.h1>
+          <motion.p
+            variants={textVariants}
+            className="text-[20px] text-[#645E6E] dark:text-[#D8D6DC] leading-[25px] w-[310px] tablet:w-[450px] desktop:w-[450px] pb-[32px]"
+          >
             A collection of my recent work and personal projects.
-          </p>
+          </motion.p>
         </div>
-
         {/* Technology Filter Carousel */}
-        <div
+        <motion.div
+          variants={textVariants}
           className="mb-8 relative p-4 rounded-lg border border-[#645E6E] dark:border-[#D8D6DC] bg-[#f5f5f5] dark:bg-[#262329] overflow-hidden"
           ref={containerRef}
         >
-          <p className="text-[#645E6E] dark:text-[#D8D6DC] mb-4">
+          <motion.p
+            variants={textVariants}
+            className="text-[#645E6E] dark:text-[#D8D6DC] mb-4"
+          >
             Filter by Technologies:
-          </p>
+          </motion.p>
           <motion.div
             ref={listRef}
             drag="x"
@@ -101,27 +137,49 @@ export default function ProjectIndex() {
               ))}
             </div>
           </motion.div>
-        </div>
-
+        </motion.div>
         {/* Projects List with Flexbox */}
-        <div className="flex flex-wrap justify-center items-center gap-6 tablet:pl-[78px] desktop:pl-0">
-          {filteredProjects.map((project) => (
-            <div
+        <motion.div
+          className="flex flex-wrap justify-center items-center gap-6 tablet:pl-[78px] desktop:pl-0"
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.1,
+              },
+            },
+          }}
+        >
+          {" "}
+          {filteredProjects.map((project, index) => (
+            <motion.div
               key={project.id}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    type: "spring",
+                    stiffness: 30,
+                    damping: 15,
+                    duration: 0.5,
+                  },
+                },
+              }}
               className="flex-grow basis-[280px] max-w-[500px] mx-auto transition-all duration-300 ease-in-out"
             >
               <ProjectCard project={project} />
-            </div>
+            </motion.div>
           ))}
-
           {/* Empty State */}
           {filteredProjects.length === 0 && (
             <div className="w-full text-center py-12 text-[#645E6E] dark:text-[#D8D6DC]">
               No projects found with the selected technologies.
             </div>
           )}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
