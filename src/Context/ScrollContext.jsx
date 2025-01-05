@@ -10,7 +10,6 @@ export function ScrollProvider({ children }) {
 
   const isScrollingRef = useRef(false);
   const scrollTimeout = useRef(null);
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Handle scroll lock based on isMenuOpen
