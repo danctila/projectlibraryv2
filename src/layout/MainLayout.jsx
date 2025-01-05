@@ -6,8 +6,7 @@ import Loader from "../components/Loader";
 import { useScroll } from "../Context/ScrollContext";
 import SocialLinksOverlay from "../components/SocialLinksOverlay";
 import DotNavigation from "../components/navigation/DotNavigation";
-import ProjectIndexNavigation from "../components/navigation/ProjectIndexNavigation";
-import ProjectDetailNavigation from "../components/navigation/ProjectDetailNavigation";
+import ProjectNavigation from "../components/navigation/ProjectNavigation";
 
 const sectionOrder = ["profile", "projects", "blog", "contact"];
 
@@ -69,8 +68,7 @@ export default function MainLayout({ children, navbarType }) {
       }`}
     >
       {navbarType === "home" && <Navigation />}
-      {navbarType === "project-index" && <ProjectIndexNavigation />}
-      {navbarType === "project-detail" && <ProjectDetailNavigation />}
+      {navbarType === "project" && <ProjectNavigation />}
 
       {loading ? <Loader /> : children}
       {isHomePage && (

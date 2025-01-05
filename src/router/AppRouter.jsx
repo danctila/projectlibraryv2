@@ -26,7 +26,7 @@ export default function AppRouter() {
           <Route
             path="/projects"
             element={
-              <MainLayout navbarType="project-index">
+              <MainLayout navbarType="project">
                 <ProjectIndex />
               </MainLayout>
             }
@@ -34,7 +34,7 @@ export default function AppRouter() {
           <Route
             path="/projects/:projectId"
             element={
-              <MainLayout navbarType="project-detail">
+              <MainLayout navbarType="project">
                 <ProjectDetail />
               </MainLayout>
             }
