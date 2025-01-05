@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -47,11 +47,15 @@ const overlayVariants = {
 };
 
 export const ProjectCard = ({ project }) => {
+  const location = useLocation();
+  const fromPath = location.pathname === "/" ? "/#projects" : "/projects";
+
   return (
     <div className="mr-4 last:mr-0 w-[350px]">
       <div className="flex flex-col items-start">
         <Link
           to={`/projects/${project.id}`}
+          state={{ from: fromPath }}
           className="block w-full relative group"
         >
           <div className="overflow-hidden rounded-[5px] relative">
@@ -109,7 +113,7 @@ export const ProjectCard = ({ project }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <Link to={`/projects/${project.id}`} className="block mt-6">
+          <Link to={`/projects/${project.id}`} state={{ from: fromPath }}>
             <h2 className="text-[32px] font-medium text-[#262329] dark:text-white">
               {project.title}
             </h2>
@@ -118,7 +122,10 @@ export const ProjectCard = ({ project }) => {
             {project.short_description}
           </p>
           <Link
-            to={`/projects/${project.id}`}
+            to={{
+              pathname: `/projects/${project.id}`,
+            }}
+            state={{ from: fromPath }}
             className="mt-4 text-[16px] text-[#3AED7C] hover:underline inline-block"
           >
             <motion.span

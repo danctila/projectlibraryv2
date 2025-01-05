@@ -1,20 +1,24 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import ThemeSwitch from "../ThemeSwitch";
 
-const ProjectIndexNavigation = () => {
+const ProjectDetailNavigation = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleBackClick = () => {
-    // Navigate to the root URL
-    navigate("/#projects");
+    const from = location.state?.from || "/"; // Provide a default value
 
-    // Add a delay before scrolling to ensure the page content is fully loaded
-    setTimeout(() => {
-      const projectsSection = document.querySelector("#projects");
-      if (projectsSection) {
-        projectsSection.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 100);
+    if (from.includes("#projects")) {
+      navigate("/"); // Navigate to root first
+      setTimeout(() => {
+        const projectsSection = document.querySelector("#projects");
+        if (projectsSection) {
+          projectsSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    } else {
+      navigate(from); // Navigate to whatever path was stored
+    }
   };
 
   return (
@@ -36,4 +40,4 @@ const ProjectIndexNavigation = () => {
   );
 };
 
-export default ProjectIndexNavigation;
+export default ProjectDetailNavigation;

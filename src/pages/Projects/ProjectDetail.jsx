@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import ProjectDetailNavigation from "../../components/navigation/ProjectDetailNavigation";
 
 export default function ProjectDetail() {
   const { projectId } = useParams();
