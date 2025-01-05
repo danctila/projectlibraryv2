@@ -1,4 +1,5 @@
 import filler from './assets/filler.jpg';
+import ratemyplatevideo from './assets/videos/RateMyPlatePromo.mp4';
 
 // Define and export the projects array
 const projects = [
@@ -7,7 +8,7 @@ const projects = [
     title: "Rate My Plate",
     description: "The Rate My Plate application is a comprehensive dining guide for Northeastern University students. Built with a React frontend and Firebase backend, it provides personalized restaurant recommendations based on user preferences, including restaurants that accept Husky Dining Dollars and offer student discounts. Users can browse restaurant details, leave reviews, and engage in real-time chats about their dining experiences. The app also integrates Google Maps for location-based searches, ensuring a seamless experience on both desktop and mobile devices. Rate My Plate combines convenience, community, and exclusive student deals to make dining enjoyable and affordable.",
     short_description: "Dining guide app for Northeastern students.",
-    videos: [],
+    videos: [ratemyplatevideo],
     images: [filler, filler, filler],
     technologies: ["React", "JavaScript", "Tailwind CSS", "Firebase", "Leaflet"],
     github: "https://github.com/danctila/rate-my-plate",
