@@ -1,5 +1,18 @@
 import { motion } from "framer-motion";
 
+const textVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 20,
+    },
+  },
+};
+
 export default function ContactSection() {
   const links = [
     {
@@ -38,16 +51,36 @@ export default function ContactSection() {
 
   return (
     <section className="min-h-screen snap-start bg-[#FBFBFB] dark:bg-[#262329] font-neue flex items-center justify-center">
-      <div className="max-w-[1915px] mx-auto px-[30px] tablet:px-[100px] desktop:px-[130px] w-full">
+      <motion.div
+        className="max-w-[1915px] mx-auto px-[30px] tablet:px-[100px] desktop:px-[130px] w-full"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.3 }}
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.2,
+            },
+          },
+        }}
+      >
+        {" "}
         {/* Section Header */}
         <div className="mb-10">
-          <h1 className="text-[40px] font-normal text-[#262329] dark:text-white pb-[8px]">
+          <motion.h1
+            variants={textVariants}
+            className="text-[40px] font-normal text-[#262329] dark:text-white pb-[8px]"
+          >
             Contact
-          </h1>
-          <p className="text-[20px] text-[#645E6E] dark:text-[#D8D6DC] leading-[25px] w-[310px] tablet:w-[450px] desktop:w-[450px] pb-[32px]">
+          </motion.h1>
+          <motion.p
+            variants={textVariants}
+            className="text-[20px] text-[#645E6E] dark:text-[#D8D6DC] leading-[25px] w-[310px] tablet:w-[450px] desktop:w-[450px] pb-[32px]"
+          >
             Morem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-            turpis molestie, dictum est a, mattis tellus.{" "}
-          </p>
+            turpis molestie, dictum est a, mattis tellus.
+          </motion.p>
           <motion.a
             href="mailto:danctilla@gmail.com"
             className="text-[20px] text-black dark:text-[#D8D6DC] underline"
@@ -63,7 +96,17 @@ export default function ContactSection() {
           >
             danctilla@gmail.com
           </motion.a>
-          <div className="flex space-x-4 mt-4">
+          <motion.div
+            className="flex space-x-4 mt-4"
+            variants={{
+              hidden: {},
+              visible: {
+                transition: {
+                  staggerChildren: 0.1,
+                },
+              },
+            }}
+          >
             {links.map((link, index) => (
               <motion.a
                 key={index}
@@ -87,9 +130,9 @@ export default function ContactSection() {
                 )}
               </motion.a>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
