@@ -6,6 +6,19 @@ import "flickity/css/flickity.css";
 import projects from "../../../projects";
 import { ProjectCard } from "../../../components/ProjectCard";
 
+const textVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 20,
+    },
+  },
+};
+
 export default function ProjectsSection() {
   const carouselRef = useRef(null);
   const flickityRef = useRef(null);
@@ -46,27 +59,60 @@ export default function ProjectsSection() {
 
   return (
     <section className="min-h-screen snap-start bg-[#FBFBFB] dark:bg-[#262329] font-neue flex items-center justify-center">
-      <div className="max-w-[1915px] mx-auto px-[30px] tablet:px-[100px] desktop:px-[130px] w-full relative">
+      <motion.div
+        className="max-w-[1915px] mx-auto px-[30px] tablet:px-[100px] desktop:px-[130px] w-full relative"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.3 }}
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.2,
+            },
+          },
+        }}
+      >
+        {" "}
         {/* Section Header */}
         <div className="mb-10 ">
-          <h1 className="text-[40px] font-normal text-[#262329] dark:text-white">
+          <motion.h1
+            variants={textVariants}
+            className="text-[40px] font-medium text-[#262329] dark:text-white"
+          >
             Projects
-          </h1>
+          </motion.h1>
           <div className="relative w-full flex flex-col tablet:flex-row items-start tablet:items-end justify-between">
-            <p className="text-[20px] text-[#645E6E] dark:text-[#D8D6DC] leading-[25px] w-[310px] tablet:w-[450px] desktop:w-[450px]">
-              Explore some of the exciting projects I've worked on recently.
-            </p>
-            <Link
-              to="/projects"
-              className="mt-6 tablet:mt-4 desktop:mt-0 text-[#645E6E] dark:text-[#D8D6DC] hover:text-black dark:hover:text-white text-[20px] underline self-start tablet:self-auto"
+            <motion.p
+              variants={textVariants}
+              className="text-[20px] text-[#645E6E] dark:text-[#D8D6DC] leading-[25px] w-[310px] tablet:w-[450px] desktop:w-[450px]"
             >
-              See all projects
-            </Link>
+              Explore some of the exciting projects I've worked on recently.
+            </motion.p>
+            <motion.div variants={textVariants}>
+              <Link
+                to="/projects"
+                className="mt-6 tablet:mt-4 desktop:mt-0 text-[#645E6E] dark:text-[#D8D6DC] hover:text-black dark:hover:text-white text-[20px] underline self-start tablet:self-auto"
+              >
+                See all projects
+              </Link>
+            </motion.div>
           </div>
         </div>
-
         {/* Carousel Container */}
-        <div className="relative h-[470px]">
+        <motion.div
+          className="relative h-[470px]"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{
+            delay: 0.4,
+            type: "spring",
+            stiffness: 100,
+            damping: 20,
+          }}
+        >
+          {" "}
           {/* Flickity Carousel */}
           <div ref={carouselRef}>
             {projects.map((project) => (
@@ -130,7 +176,6 @@ export default function ProjectsSection() {
               </motion.button>
 
               {/* Next Button (hide if atEnd) */}
-
               <motion.button
                 key="next-button"
                 initial={{ opacity: 0 }}
@@ -183,8 +228,8 @@ export default function ProjectsSection() {
               </motion.button>
             </AnimatePresence>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       <style>{`
         .flickity-enabled {

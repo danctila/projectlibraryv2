@@ -114,11 +114,11 @@ export const ProjectCard = ({ project }) => {
           transition={{ delay: 0.2, duration: 0.5 }}
         >
           <Link to={`/projects/${project.id}`} state={{ from: fromPath }}>
-            <h2 className="text-[32px] font-medium text-[#262329] dark:text-white">
+            <h2 className="text-[30px] font-medium text-[#262329] dark:text-white">
               {project.title}
             </h2>
           </Link>
-          <p className="mt-2 text-[20px] text-[#645E6E] dark:text-[#D8D6DC]">
+          <p className="mt-2 text-[18px] text-[#645E6E] dark:text-[#D8D6DC]">
             {project.short_description}
           </p>
           <Link
