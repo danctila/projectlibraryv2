@@ -1,9 +1,16 @@
+import { waveform } from "ldrs";
+
 export default function Loader() {
+  waveform.register();
+
   return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center bg-white dark:bg-gray-900 z-50">
-      {/* Simple spinner or fancy animation */}
-      <div className="loader border-4 border-t-blue-500 rounded-full w-12 h-12 animate-spin mb-2"></div>
-      <p>Loading...</p>
+    <div className="min-h-screen flex items-center justify-center bg-[#FBFBFB] dark:bg-[#262329]">
+      <l-waveform
+        size="140"
+        stroke="3.5"
+        speed="1.2"
+        color="#8A34F9"
+      ></l-waveform>
     </div>
   );
 }

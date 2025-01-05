@@ -25,7 +25,7 @@ export default function MainLayout({ children, navbarType }) {
       setLoading(true);
       const timer = setTimeout(() => {
         setLoading(false);
-      }, 600);
+      }, 900);
 
       return () => clearTimeout(timer);
     } else {
