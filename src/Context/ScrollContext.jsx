@@ -10,6 +10,8 @@ export function ScrollProvider({ children }) {
 
   const isScrollingRef = useRef(false);
   const scrollTimeout = useRef(null);
+  const lastScrollTime = useRef(0);
+  const scrollDeltaY = useRef(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Handle scroll lock based on isMenuOpen
@@ -79,10 +81,42 @@ export function ScrollProvider({ children }) {
         return;
       }
 
-      const direction = event.deltaY > 0 ? 1 : -1;
+      // To counteract touchpad inertia
+      const now = Date.now();
+
+      scrollDeltaY.current += event.deltaY;
+
+      // Check if we should process this scroll event
+      if (now - lastScrollTime.current < 50) {
+        event.preventDefault();
+        return;
+      }
+
+      // Determine scroll direction based on accumulated delta
+      const direction = scrollDeltaY.current > 0 ? 1 : -1;
+
+      // Reset accumulated delta
+      scrollDeltaY.current = 0;
+      lastScrollTime.current = now;
+
+      // Check if the event is from a touchpad
+      const isTouchPad = event.wheelDeltaY
+        ? event.wheelDeltaY === -3 * event.deltaY
+        : event.deltaMode === 0;
+
+      // Adjust threshold based on input type
+      const scrollThreshold = isTouchPad ? 50 : 10;
+
+      // Only process scroll if it exceeds threshold
+      if (Math.abs(event.deltaY) < scrollThreshold) {
+        event.preventDefault();
+        return;
+      }
+
       const currentIndex = Array.from(
         document.querySelectorAll("section[id]")
       ).findIndex((section) => section.id === activeSection);
+
       const nextIndex = Math.min(
         Math.max(0, currentIndex + direction),
         document.querySelectorAll("section[id]").length - 1
