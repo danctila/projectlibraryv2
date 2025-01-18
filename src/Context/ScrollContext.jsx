@@ -99,13 +99,8 @@ export function ScrollProvider({ children }) {
       scrollDeltaY.current = 0;
       lastScrollTime.current = now;
 
-      // Check if the event is from a touchpad
-      const isTouchPad = event.wheelDeltaY
-        ? event.wheelDeltaY === -3 * event.deltaY
-        : event.deltaMode === 0;
-
       // Adjust threshold based on input type
-      const scrollThreshold = isTouchPad ? 50 : 10;
+      const scrollThreshold = 10;
 
       // Only process scroll if it exceeds threshold
       if (Math.abs(event.deltaY) < scrollThreshold) {
