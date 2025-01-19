@@ -66,7 +66,7 @@ export const ProjectCard = ({ project }) => {
               <img
                 src={project.images[0]}
                 alt={project.title}
-                className="w-full h-[230px] object-cover"
+                className="w-full h-[197px] object-cover"
               />
             </motion.div>
 
