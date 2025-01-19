@@ -127,11 +127,3 @@ export default function MainLayout({ children, navbarType }) {
     </div>
   );
 }
-// To do later:
-// for different nav bar layouts
-//   <div>
-//   {navbarType === "home" && <HomeNavBar />}
-//   {navbarType === "blog" && <BlogNavBar />}
-//   {navbarType === "project" && <ProjectNavBar />}
-//   <main>{children}</main>
-// </div>
