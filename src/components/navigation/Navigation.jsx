@@ -47,7 +47,7 @@ export default function Navigation() {
       {/* Main Navigation */}
       <nav className="fixed top-0 left-0 w-full z-[60] bg-transparent transition-all duration-300 flex items-center justify-between px-6 py-4 h-[80px]">
         {/* Logo or Home Link */}
-        <p className="font-neue font-bold italic dark:text-[#8A34F9] text-[#6E07F3] text-[32px]">
+        <p className="font-neue font-bold italic dark:text-[#8A34F9] text-[#6E07F3] text-[32px] invisible mobile:invisible tablet:visible desktop:visible">
           <div className="relative z-[10]">
             <AnimatePresence>
               {!menuOpen && activeSection !== "profile" && (
@@ -159,10 +159,9 @@ export default function Navigation() {
         {menuOpen && (
           <motion.div
             className="
-      fixed inset-0 z-50 
-      bg-[#DEDDE2] dark:bg-[#3E3B45]
-      flex flex-col items-center justify-start pt-40 dark:text-white light:text-black font-neue
-    "
+            fixed inset-0 z-50 
+            bg-[#DEDDE2] dark:bg-[#3E3B45]
+            flex flex-col items-center justify-center dark:text-white light:text-black font-neue"
             onClick={toggleMenu}
             initial={{ opacity: 0 }} // Start with opacity 0 (invisible)
             animate={{ opacity: 1 }} // Animate to opacity 1 (visible)
