@@ -101,7 +101,7 @@ export default function ProjectsSection() {
         </div>
         {/* Carousel Container */}
         <motion.div
-          className="relative h-[470px]"
+          className="relative h-[370px]"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.3 }}
@@ -120,7 +120,7 @@ export default function ProjectsSection() {
             ))}
           </div>
           {/* Navigation Arrows */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 hidden mobile:hidden tablet:block desktop:block">
             <AnimatePresence>
               {/* Previous Button (hide if atStart) */}
 
