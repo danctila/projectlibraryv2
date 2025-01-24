@@ -51,22 +51,23 @@ export const ProjectCard = ({ project }) => {
   const fromPath = location.pathname === "/" ? "/#projects" : "/projects";
 
   return (
-    <div className="mr-4 last:mr-0 w-[350px]">
+    <div className="mr-4 last:mr-0 w-[80vw] max-w-[350px] min-w-[260px]">
       <div className="flex flex-col items-start">
         <Link
           to={`/projects/${project.id}`}
           state={{ from: fromPath }}
           className="block w-full relative group"
         >
-          <div className="overflow-hidden rounded-[5px] relative">
+          <div className="overflow-hidden rounded-[5px] relative aspect-[1.78]">
             <motion.div
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
+              className="h-full"
             >
               <img
                 src={project.images[0]}
                 alt={project.title}
-                className="w-full h-[197px] object-cover"
+                className="w-full h-full object-cover"
               />
             </motion.div>
 

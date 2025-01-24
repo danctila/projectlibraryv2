@@ -31,6 +31,7 @@ export default function ProjectsSection() {
       pageDots: false,
       prevNextButtons: false,
       freeScroll: false,
+      percentPosition: true,
       freeScrollFriction: 0.075,
       selectedAttraction: 0.025,
       friction: 0.28,
