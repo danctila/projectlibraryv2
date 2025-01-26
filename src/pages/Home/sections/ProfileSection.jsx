@@ -60,11 +60,11 @@ export default function ProfileSection() {
   const { activeSection } = useScroll();
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselRef = useRef(null);
-  const flickityRef = useRef(null);
+  const flickityInstance = useRef(null);
 
   useEffect(() => {
     if (carouselRef.current) {
-      flickityRef.current = new Flickity(carouselRef.current, {
+      flickityInstance.current = new Flickity(carouselRef.current, {
         cellAlign: "center",
         contain: true,
         draggable: true,
@@ -79,7 +79,7 @@ export default function ProfileSection() {
         },
       });
 
-      return () => flickityRef.current?.destroy();
+      return () => flickityInstance.current?.destroy();
     }
   }, []);
 
@@ -175,7 +175,7 @@ export default function ProfileSection() {
             transition={{ delay: 0.6 }}
           />
           {/* Headshot Container */}
-          <div className="relative w-[270px] h-[270px] mobile:w-[270px] mobile:h-[270px] tablet:w-[400px] tablet:h-[400px] desktop:w-[400px] desktop:h-[400px]">
+          <div className="relative w-[270px] h-[270px] mobile:w-[270px] mobile:h-[270px] tablet:w-[400px] tablet:h-[400px] desktop:w-[400px] desktop:h-[400px] overflow-hidden">
             {/* Static Headshot */}
             <motion.img
               src={headshot}
@@ -188,9 +188,10 @@ export default function ProfileSection() {
             />
 
             {/* Hat Carousel Container */}
+
             <div
               ref={carouselRef}
-              className="absolute inset-0 z-10"
+              className="profile-carousel-container absolute inset-0 z-10"
               style={{ width: "100%", height: "100%" }}
             >
               {rolesHats.map((item, index) => (
@@ -220,20 +221,6 @@ export default function ProfileSection() {
           </div>
         </motion.div>
       </div>
-      <style jsx>{`
-        .flickity-enabled {
-          outline: none;
-          overflow: visible !important;
-        }
-        .flickity-viewport {
-          width: 100%;
-          height: 100% !important;
-        }
-        .flickity-slider {
-          display: flex;
-          align-items: center;
-        }
-      `}</style>
     </div>
   );
 }

@@ -115,7 +115,7 @@ export default function ProjectsSection() {
         >
           {" "}
           {/* Flickity Carousel */}
-          <div ref={carouselRef}>
+          <div ref={carouselRef} className="projects-carousel-container">
             {projects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
@@ -231,12 +231,6 @@ export default function ProjectsSection() {
           </div>
         </motion.div>
       </motion.div>
-
-      <style>{`
-        .flickity-enabled {
-          outline: none;
-        }
-      `}</style>
     </section>
   );
 }

@@ -163,10 +163,10 @@ export default function Navigation() {
             bg-[#DEDDE2] dark:bg-[#3E3B45]
             flex flex-col items-center justify-center dark:text-white light:text-black font-neue"
             onClick={toggleMenu}
-            initial={{ opacity: 0 }} // Start with opacity 0 (invisible)
-            animate={{ opacity: 1 }} // Animate to opacity 1 (visible)
+            initial={{ opacity: 0, pointerEvents: "none" }} // Start with opacity 0 (invisible)
+            animate={{ opacity: 1, pointerEvents: "auto" }} // Animate to opacity 1 (visible)
+            exit={{ opacity: 0, pointerEvents: "none" }} // Animate to opacity 0 when exiting (invisible)
             transition={{ duration: 0.3 }} // Smooth transition over 0.3 seconds
-            exit={{ opacity: 0 }}
           >
             <div
               className="relative flex flex-col items-center space-y-[85px] Mobile:w-full Tablet:w-full px-4
