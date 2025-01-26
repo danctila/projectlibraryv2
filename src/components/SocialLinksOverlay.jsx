@@ -10,6 +10,7 @@ const SocialLinksOverlay = () => {
     {
       href: "https://github.com/danctila",
       ariaLabel: "GitHub Profile",
+      hoverClass: "group-hover:fill-[#2dba4e]",
       svg: (className) => (
         <svg
           className={className}
@@ -26,6 +27,7 @@ const SocialLinksOverlay = () => {
     {
       href: "https://www.linkedin.com/in/danctil/",
       ariaLabel: "LinkedIn Profile",
+      hoverClass: "group-hover:fill-[#0077B5]",
       svg: (className) => (
         <svg
           className={className}
@@ -42,6 +44,7 @@ const SocialLinksOverlay = () => {
     {
       href: "mailto:danctilla@gmail.com",
       ariaLabel: "Email Contact",
+      hoverClass: "",
       svg: (className) => (
         <svg
           className={className}
@@ -51,15 +54,33 @@ const SocialLinksOverlay = () => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path d="M4.22727 18.5657H7.09091V11.6112L3 8.54297V17.3384C3 18.0165 3.5492 18.5657 4.22727 18.5657Z" />
-          <path d="M16.9091 18.5657H19.7727C20.4508 18.5657 21 18.0165 21 17.3384V8.54297L16.9091 11.6112V18.5657Z" />
-          <path d="M16.9091 6.29308V11.6113L21 8.54308V6.90672C21 5.39001 19.2685 4.52376 18.0545 5.43399L16.9091 6.29308Z" />
           <path
+            className="stroke-[#262329] dark:stroke-[#FBFBFB] transition-[fill,stroke] duration-300 group-hover:fill-[#4285F4] group-hover:stroke-[#4285F4]"
+            strokeWidth="0.5"
+            d="M4.22727 18.5657H7.09091V11.6112L3 8.54297V17.3384C3 18.0165 3.5492 18.5657 4.22727 18.5657Z"
+          />
+          <path
+            className="stroke-[#262329] dark:stroke-[#FBFBFB] transition-[fill,stroke] duration-300 group-hover:fill-[#34A853] group-hover:stroke-[#34A853]"
+            strokeWidth="0.5"
+            d="M16.9091 18.5657H19.7727C20.4508 18.5657 21 18.0165 21 17.3384V8.54297L16.9091 11.6112V18.5657Z"
+          />
+          <path
+            className="stroke-[#262329] dark:stroke-[#FBFBFB] transition-[fill,stroke] duration-300 group-hover:fill-[#FBBC05] group-hover:stroke-[#FBBC05]"
+            strokeWidth="0.5"
+            d="M16.9091 6.29308V11.6113L21 8.54308V6.90672C21 5.39001 19.2685 4.52376 18.0545 5.43399L16.9091 6.29308Z"
+          />
+          <path
+            className="stroke-[#262329] dark:stroke-[#FBFBFB] transition-[fill,stroke] duration-300 group-hover:fill-[#EA4335] group-hover:stroke-[#EA4335]"
+            strokeWidth="0.5"
             fillRule="evenodd"
             clipRule="evenodd"
             d="M7.09094 11.6112V6.29297L12 9.97479L16.9091 6.29297V11.6112L12 15.293L7.09094 11.6112Z"
           />
-          <path d="M3 6.90672V8.54308L7.09091 11.6113V6.29308L5.94545 5.43399C4.73148 4.52376 3 5.39001 3 6.90672Z" />
+          <path
+            className="stroke-[#262329] dark:stroke-[#FBFBFB] transition-[fill,stroke] duration-300 group-hover:fill-[#BB001B] group-hover:stroke-[#BB001B]"
+            strokeWidth="0.5"
+            d="M3 6.90672V8.54308L7.09091 11.6113V6.29308L5.94545 5.43399C4.73148 4.52376 3 5.39001 3 6.90672Z"
+          />
         </svg>
       ),
     },
@@ -88,7 +109,7 @@ const SocialLinksOverlay = () => {
               transition={{ delay: index * 0.1 }}
             >
               {link.svg(
-                "fill-[#262329] dark:fill-[#FBFBFB] group-hover:fill-[#3AED7C] transition-colors duration-300"
+                `fill-[#262329] dark:fill-[#FBFBFB] ${link.hoverClass} transition-colors duration-300`
               )}
             </motion.a>
           ))}

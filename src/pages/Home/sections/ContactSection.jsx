@@ -18,6 +18,7 @@ export default function ContactSection() {
     {
       href: "https://github.com/danctila",
       ariaLabel: "GitHub Profile",
+      hoverClass: "group-hover:fill-[#2dba4e]",
       svg: (className) => (
         <svg
           className={className}
@@ -34,6 +35,7 @@ export default function ContactSection() {
     {
       href: "https://www.linkedin.com/in/danctil/",
       ariaLabel: "LinkedIn Profile",
+      hoverClass: "group-hover:fill-[#0077B5]",
       svg: (className) => (
         <svg
           className={className}
@@ -126,7 +128,7 @@ export default function ContactSection() {
                 }}
               >
                 {link.svg(
-                  "fill-[#262329] dark:fill-[#FBFBFB] group-hover:fill-[#3AED7C] transition-colors duration-300"
+                  `fill-[#262329] dark:fill-[#FBFBFB] ${link.hoverClass} transition-colors duration-300`
                 )}
               </motion.a>
             ))}
