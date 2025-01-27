@@ -48,6 +48,10 @@ import gamehubvideo from './assets/videos/Game Hub Video.mp4';
 import gamehub1 from './assets/photos/GameHub_Pic_1.webp'
 import gamehub2 from './assets/photos/GameHub_Pic_2.webp'
 
+// Blackjack project assets
+import blackjackvideo from './assets/videos/BlackJack Promo.mp4';
+import blackjack1 from './assets/photos/BlackJack_Pic_1.webp'
+
 // Define and export the projects array
 const projects = [
   {
@@ -139,8 +143,8 @@ const projects = [
     title: "BlackJack",
     description: "Using only Java, this project recreates a standard 6-deck game of BlackJack. Starting the player off with 2 cards, the player has the option to take a card or not after viewing their current hand as compared to the dealer's current hand.",
     short_description: "Java implementation of 6-deck BlackJack.",
-    videos: [],
-    images: [filler, filler, filler],
+    videos: [blackjackvideo],
+    images: [blackjack1],
     technologies: ["Java", "BlueJ"],
   },
 ];
