@@ -58,7 +58,7 @@ export const ProjectCard = ({ project }) => {
           state={{ from: fromPath }}
           className="block w-full relative group"
         >
-          <div className="overflow-hidden rounded-[5px] relative aspect-[1.78]">
+          <div className="overflow-hidden rounded-[5px] relative aspect-[1.78] border border-[#E5E5E5] dark:border-[#3A3A3A]">
             <motion.div
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
