@@ -8,13 +8,23 @@ const ProjectNavigation = () => {
   const handleBackClick = () => {
     const from = location.state?.from || "/#projects";
 
-    navigate(from);
-    setTimeout(() => {
-      const projectsSection = document.querySelector("#projects");
-      if (projectsSection) {
-        projectsSection.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 100);
+    // Check if we're navigating to a URL with search parameters
+    if (from.startsWith("/projects") && from.includes("?")) {
+      // Navigate to the projects page with preserved search parameters
+      navigate(from);
+    } else if (from === "/#projects") {
+      // Navigate to home page projects section
+      navigate(from);
+      setTimeout(() => {
+        const projectsSection = document.querySelector("#projects");
+        if (projectsSection) {
+          projectsSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    } else {
+      // Fallback navigation
+      navigate(from);
+    }
   };
 
   return (
