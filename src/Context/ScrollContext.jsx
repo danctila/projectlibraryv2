@@ -7,12 +7,20 @@ export function ScrollProvider({ children }) {
   const [activeSection, setActiveSection] = useState(() => {
     return localStorage.getItem("activeSection") || "profile";
   });
-
+  // Scroll handling refs
   const isScrollingRef = useRef(false);
   const scrollTimeout = useRef(null);
   const lastScrollTime = useRef(0);
   const scrollDeltaY = useRef(0);
+
+  // Menu handling state
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Touch handling refs
+  const touchStartY = useRef(0);
+  const touchStartTime = useRef(0);
+  const touchDeltaY = useRef(0);
+  const isTouchScrolling = useRef(false);
 
   // Handle scroll lock based on isMenuOpen
   useEffect(() => {
@@ -55,6 +63,7 @@ export function ScrollProvider({ children }) {
     };
   }, []);
 
+  // Scroll to section
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
     if (!section) return;
@@ -75,6 +84,7 @@ export function ScrollProvider({ children }) {
   };
 
   useEffect(() => {
+    // Handle wheel scroll for desktop/laptop devices
     const handleWheel = (event) => {
       if (isMenuOpen || isScrollingRef.current) {
         event.preventDefault();
@@ -125,10 +135,125 @@ export function ScrollProvider({ children }) {
       }
     };
 
+    // Handle touch start for mobile devices
+    const handleTouchStart = (event) => {
+      if (isMenuOpen || isScrollingRef.current) {
+        return;
+      }
+
+      touchStartY.current = event.touches[0].clientY;
+      touchStartTime.current = Date.now();
+      touchDeltaY.current = 0;
+      isTouchScrolling.current = false;
+
+      // Also track X position for horizontal gesture detection
+      touchStartY.current = event.touches[0].clientY;
+      const touchStartX = event.touches[0].clientX;
+      touchStartY.touchStartX = touchStartX; // Store X on the Y ref for simplicity
+    };
+
+    const handleTouchMove = (event) => {
+      if (isMenuOpen || isScrollingRef.current) {
+        event.preventDefault();
+        return;
+      }
+
+      const touchY = event.touches[0].clientY;
+      const touchX = event.touches[0].clientX;
+      const deltaY = touchStartY.current - touchY;
+      const deltaX = Math.abs(touchStartY.touchStartX - touchX);
+
+      touchDeltaY.current = deltaY;
+
+      // Check if this is primarily a horizontal gesture
+      const isHorizontalGesture =
+        Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 20;
+
+      // If it's a horizontal gesture, don't prevent default (allow carousel scrolling)
+      // If it's vertical, prevent default to stop native scrolling
+      if (!isHorizontalGesture) {
+        event.preventDefault();
+      }
+    };
+
+    // Handle touch end for mobile devices
+    const handleTouchEnd = (event) => {
+      if (isMenuOpen || isScrollingRef.current || isTouchScrolling.current) {
+        return;
+      }
+
+      const now = Date.now();
+      const touchDuration = now - touchStartTime.current;
+      const touchDistance = Math.abs(touchDeltaY.current);
+      const touchDistanceX = Math.abs(
+        touchStartY.touchStartX -
+          (event.changedTouches[0]?.clientX || touchStartY.touchStartX)
+      );
+
+      // Check if this was primarily a horizontal gesture
+      const isHorizontalGesture =
+        touchDistanceX > Math.abs(touchDeltaY.current) && touchDistanceX > 30;
+
+      // If it was a horizontal gesture, don't trigger vertical section scrolling
+      if (isHorizontalGesture) {
+        return;
+      }
+
+      // Minimum distance threshold for a valid swipe (similar to desktop scroll threshold)
+      const minSwipeDistance = 50;
+
+      // Maximum duration for a flick (to prevent fast flicks from jumping multiple sections)
+      const maxFlickDuration = 300;
+
+      // Only process if we have sufficient distance and reasonable duration
+      if (touchDistance < minSwipeDistance) {
+        return;
+      }
+
+      // Prevent multiple rapid scrolls
+      if (now - lastScrollTime.current < 100) {
+        return;
+      }
+
+      // Determine direction
+      const direction = touchDeltaY.current > 0 ? 1 : -1;
+
+      lastScrollTime.current = now;
+      isTouchScrolling.current = true;
+
+      const currentIndex = Array.from(
+        document.querySelectorAll("section[id]")
+      ).findIndex((section) => section.id === activeSection);
+
+      const nextIndex = Math.min(
+        Math.max(0, currentIndex + direction),
+        document.querySelectorAll("section[id]").length - 1
+      );
+
+      if (nextIndex !== currentIndex) {
+        const nextSectionId =
+          document.querySelectorAll("section[id]")[nextIndex].id;
+        scrollToSection(nextSectionId);
+      }
+
+      // Reset touch scrolling flag after a delay
+      setTimeout(() => {
+        isTouchScrolling.current = false;
+      }, 100);
+    };
+
+    // Add event listeners
     window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     return () => {
+      // Remove event listeners on cleanup
       window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [activeSection, isMenuOpen]);
 
