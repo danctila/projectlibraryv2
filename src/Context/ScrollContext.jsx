@@ -86,8 +86,10 @@ export function ScrollProvider({ children }) {
   useEffect(() => {
     // Handle wheel scroll for desktop/laptop devices
     const handleWheel = (event) => {
-      if (isMenuOpen || isScrollingRef.current) {
-        event.preventDefault();
+      // Only apply custom wheel handling if we're on a page with sections
+      const sections = document.querySelectorAll("section[id]");
+      if (sections.length === 0 || isMenuOpen || isScrollingRef.current) {
+        if (isMenuOpen) event.preventDefault();
         return;
       }
 
@@ -118,26 +120,26 @@ export function ScrollProvider({ children }) {
         return;
       }
 
-      const currentIndex = Array.from(
-        document.querySelectorAll("section[id]")
-      ).findIndex((section) => section.id === activeSection);
+      const currentIndex = Array.from(sections).findIndex(
+        (section) => section.id === activeSection
+      );
 
       const nextIndex = Math.min(
         Math.max(0, currentIndex + direction),
-        document.querySelectorAll("section[id]").length - 1
+        sections.length - 1
       );
 
       if (nextIndex !== currentIndex) {
-        const nextSectionId =
-          document.querySelectorAll("section[id]")[nextIndex].id;
+        const nextSectionId = sections[nextIndex].id;
         scrollToSection(nextSectionId);
         event.preventDefault();
       }
     };
 
-    // Handle touch start for mobile devices
     const handleTouchStart = (event) => {
-      if (isMenuOpen || isScrollingRef.current) {
+      // Only apply custom touch handling if we're on a page with sections
+      const sections = document.querySelectorAll("section[id]");
+      if (sections.length === 0 || isMenuOpen || isScrollingRef.current) {
         return;
       }
 
@@ -153,6 +155,12 @@ export function ScrollProvider({ children }) {
     };
 
     const handleTouchMove = (event) => {
+      // Only apply custom touch handling if we're on a page with sections
+      const sections = document.querySelectorAll("section[id]");
+      if (sections.length === 0) {
+        return; // Allow normal scrolling on pages without sections
+      }
+
       if (isMenuOpen || isScrollingRef.current) {
         event.preventDefault();
         return;
@@ -176,14 +184,19 @@ export function ScrollProvider({ children }) {
       }
     };
 
-    // Handle touch end for mobile devices
     const handleTouchEnd = (event) => {
-      if (isMenuOpen || isScrollingRef.current || isTouchScrolling.current) {
+      // Only apply custom touch handling if we're on a page with sections
+      const sections = document.querySelectorAll("section[id]");
+      if (
+        sections.length === 0 ||
+        isMenuOpen ||
+        isScrollingRef.current ||
+        isTouchScrolling.current
+      ) {
         return;
       }
 
       const now = Date.now();
-      const touchDuration = now - touchStartTime.current;
       const touchDistance = Math.abs(touchDeltaY.current);
       const touchDistanceX = Math.abs(
         touchStartY.touchStartX -
@@ -221,18 +234,17 @@ export function ScrollProvider({ children }) {
       lastScrollTime.current = now;
       isTouchScrolling.current = true;
 
-      const currentIndex = Array.from(
-        document.querySelectorAll("section[id]")
-      ).findIndex((section) => section.id === activeSection);
+      const currentIndex = Array.from(sections).findIndex(
+        (section) => section.id === activeSection
+      );
 
       const nextIndex = Math.min(
         Math.max(0, currentIndex + direction),
-        document.querySelectorAll("section[id]").length - 1
+        sections.length - 1
       );
 
       if (nextIndex !== currentIndex) {
-        const nextSectionId =
-          document.querySelectorAll("section[id]")[nextIndex].id;
+        const nextSectionId = sections[nextIndex].id;
         scrollToSection(nextSectionId);
       }
 
