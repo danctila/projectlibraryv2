@@ -5,8 +5,8 @@ import ContactSection from "./sections/ContactSection";
 
 export default function Home() {
   return (
-    <div className="relative w-screen h-screen">
-      <div className="w-full h-full snap-y snap-mandatory scroll-smooth overflow-y-scroll hide-scrollbar">
+    <div className="relative w-screen h-screen manual-scroll-only">
+      <div className="w-full h-full hide-scrollbar touch-scroll-control">
         <section id="profile" className="h-screen snap-start">
           <ProfileSection />
         </section>

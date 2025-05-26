@@ -22,6 +22,9 @@ export function ScrollProvider({ children }) {
   const touchStartTime = useRef(0);
   const touchDeltaY = useRef(0);
   const isTouchScrolling = useRef(false);
+  const nativeScrollDetected = useRef(false);
+  const touchMoveCount = useRef(0);
+  const scrollRecoveryTimeout = useRef(null);
 
   // Handle scroll lock based on isMenuOpen
   useEffect(() => {
@@ -172,9 +175,10 @@ export function ScrollProvider({ children }) {
       touchStartTime.current = Date.now();
       touchDeltaY.current = 0;
       isTouchScrolling.current = false;
+      nativeScrollDetected.current = false;
+      touchMoveCount.current = 0;
 
       // Also track X position for horizontal gesture detection
-      touchStartY.current = event.touches[0].clientY;
       const touchStartX = event.touches[0].clientX;
       touchStartY.touchStartX = touchStartX; // Store X on the Y ref for simplicity
     };
@@ -187,9 +191,13 @@ export function ScrollProvider({ children }) {
       }
 
       if (isMenuOpen || isScrollingRef.current) {
-        event.preventDefault();
+        if (event.cancelable) {
+          event.preventDefault();
+        }
         return;
       }
+
+      touchMoveCount.current++;
 
       const touchY = event.touches[0].clientY;
       const touchX = event.touches[0].clientX;
@@ -201,6 +209,25 @@ export function ScrollProvider({ children }) {
       // Check if this is primarily a horizontal gesture
       const isHorizontalGesture =
         Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 20;
+
+      // Detect if native scrolling has taken over
+      if (!event.cancelable) {
+        nativeScrollDetected.current = true;
+        return;
+      }
+
+      // If we've detected native scrolling before, be more cautious
+      if (nativeScrollDetected.current) {
+        // Only try to prevent if we have a very clear vertical gesture and low move count
+        if (
+          !isHorizontalGesture &&
+          touchMoveCount.current < 3 &&
+          Math.abs(deltaY) > 10
+        ) {
+          event.preventDefault();
+        }
+        return;
+      }
 
       // If it's a horizontal gesture, don't prevent default (allow carousel scrolling)
       // If it's vertical, prevent default to stop native scrolling
@@ -218,6 +245,12 @@ export function ScrollProvider({ children }) {
         isScrollingRef.current ||
         isTouchScrolling.current
       ) {
+        return;
+      }
+
+      // If native scrolling was detected, skip custom handling for this gesture
+      if (nativeScrollDetected.current) {
+        nativeScrollDetected.current = false; // Reset for next gesture
         return;
       }
 
@@ -279,11 +312,57 @@ export function ScrollProvider({ children }) {
       }, 100);
     };
 
+    // Recovery mechanism for when native scrolling takes over
+    const handleScrollRecovery = () => {
+      // Only apply recovery if we're on a page with sections
+      const sections = document.querySelectorAll("section[id]");
+      if (sections.length === 0 || isScrollingRef.current || isMenuOpen) {
+        return;
+      }
+
+      // Clear any existing recovery timeout
+      if (scrollRecoveryTimeout.current) {
+        clearTimeout(scrollRecoveryTimeout.current);
+      }
+
+      // Set a timeout to snap to the nearest section after scrolling stops
+      scrollRecoveryTimeout.current = setTimeout(() => {
+        if (nativeScrollDetected.current || !isScrollingRef.current) {
+          // Find the section that's most visible
+          let maxVisibility = 0;
+          let mostVisibleSection = null;
+
+          sections.forEach((section) => {
+            const rect = section.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+
+            // Calculate how much of the section is visible
+            const visibleTop = Math.max(0, rect.top);
+            const visibleBottom = Math.min(windowHeight, rect.bottom);
+            const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+            const visibility = visibleHeight / windowHeight;
+
+            if (visibility > maxVisibility) {
+              maxVisibility = visibility;
+              mostVisibleSection = section;
+            }
+          });
+
+          if (mostVisibleSection && maxVisibility > 0.3) {
+            const sectionId = mostVisibleSection.id;
+            scrollToSection(sectionId);
+            nativeScrollDetected.current = false; // Reset the flag
+          }
+        }
+      }, 150); // Wait for scrolling to stop
+    };
+
     // Add event listeners
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("touchmove", handleTouchMove, { passive: false });
     window.addEventListener("touchend", handleTouchEnd, { passive: true });
+    window.addEventListener("scroll", handleScrollRecovery, { passive: true });
 
     return () => {
       // Remove event listeners on cleanup
@@ -291,6 +370,10 @@ export function ScrollProvider({ children }) {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("scroll", handleScrollRecovery);
+      if (scrollRecoveryTimeout.current) {
+        clearTimeout(scrollRecoveryTimeout.current);
+      }
     };
   }, [activeSection, isMenuOpen]);
 

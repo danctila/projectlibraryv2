@@ -3,6 +3,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent momentum scrolling and give more control over touch events */
+.touch-scroll-control {
+  touch-action: none;
+  -webkit-overflow-scrolling: auto;
+  overscroll-behavior: none;
+}
+
+/* For the main container that should allow only manual scrolling */
+.manual-scroll-only {
+  touch-action: none;
+  -webkit-overflow-scrolling: auto;
+  overscroll-behavior: none;
+  overflow: hidden;
+}
+
 .hide-scrollbar {
   /* For Internet Explorer, Edge */
   -ms-overflow-style: none;
