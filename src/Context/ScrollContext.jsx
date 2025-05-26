@@ -12,6 +12,7 @@ export function ScrollProvider({ children }) {
   const scrollTimeout = useRef(null);
   const lastScrollTime = useRef(0);
   const scrollDeltaY = useRef(0);
+  const lastScrollDirection = useRef(0);
 
   // Menu handling state
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -68,6 +69,13 @@ export function ScrollProvider({ children }) {
     const section = document.getElementById(sectionId);
     if (!section) return;
 
+    // Clear any pending scroll operations
+    if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+
+    // Reset accumulated scroll delta and direction to prevent interference
+    scrollDeltaY.current = 0;
+    lastScrollDirection.current = 0;
+
     setActiveSection(sectionId);
     localStorage.setItem("activeSection", sectionId);
     window.history.replaceState({}, "", `#${sectionId}`);
@@ -76,11 +84,13 @@ export function ScrollProvider({ children }) {
 
     section.scrollIntoView({ behavior: "smooth" });
 
-    if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
-
+    // Longer timeout to ensure animation completes before allowing new scrolls
     scrollTimeout.current = setTimeout(() => {
       isScrollingRef.current = false;
-    }, 800);
+      // Also reset delta and direction on timeout to ensure clean state
+      scrollDeltaY.current = 0;
+      lastScrollDirection.current = 0;
+    }, 1000);
   };
 
   useEffect(() => {
@@ -88,37 +98,53 @@ export function ScrollProvider({ children }) {
     const handleWheel = (event) => {
       // Only apply custom wheel handling if we're on a page with sections
       const sections = document.querySelectorAll("section[id]");
-      if (sections.length === 0 || isMenuOpen || isScrollingRef.current) {
+      if (sections.length === 0 || isMenuOpen) {
         if (isMenuOpen) event.preventDefault();
         return;
       }
 
-      // To counteract touchpad inertia
-      const now = Date.now();
+      // Always prevent default on pages with sections to avoid conflicts
+      event.preventDefault();
 
-      scrollDeltaY.current += event.deltaY;
-
-      // Check if we should process this scroll event
-      if (now - lastScrollTime.current < 50) {
-        event.preventDefault();
+      // Block all scroll processing during animations
+      if (isScrollingRef.current) {
         return;
       }
+
+      // To counteract touchpad inertia and rapid direction changes
+      const now = Date.now();
+
+      // More aggressive timing check for rapid scrolling
+      if (now - lastScrollTime.current < 100) {
+        return;
+      }
+
+      // Only accumulate delta if we're not currently scrolling
+      scrollDeltaY.current += event.deltaY;
 
       // Determine scroll direction based on accumulated delta
       const direction = scrollDeltaY.current > 0 ? 1 : -1;
 
-      // Reset accumulated delta
-      scrollDeltaY.current = 0;
-      lastScrollTime.current = now;
+      // Check for rapid direction changes and require higher threshold
+      const directionChanged =
+        lastScrollDirection.current !== 0 &&
+        lastScrollDirection.current !== direction;
 
-      // Adjust threshold based on input type
-      const scrollThreshold = 10;
+      // Adjust threshold based on input type and direction changes
+      const baseThreshold = 30;
+      const scrollThreshold = directionChanged
+        ? baseThreshold * 1.5
+        : baseThreshold;
 
       // Only process scroll if it exceeds threshold
-      if (Math.abs(event.deltaY) < scrollThreshold) {
-        event.preventDefault();
+      if (Math.abs(scrollDeltaY.current) < scrollThreshold) {
         return;
       }
+
+      // Reset accumulated delta BEFORE triggering scroll to prevent interference
+      scrollDeltaY.current = 0;
+      lastScrollTime.current = now;
+      lastScrollDirection.current = direction;
 
       const currentIndex = Array.from(sections).findIndex(
         (section) => section.id === activeSection
@@ -132,7 +158,6 @@ export function ScrollProvider({ children }) {
       if (nextIndex !== currentIndex) {
         const nextSectionId = sections[nextIndex].id;
         scrollToSection(nextSectionId);
-        event.preventDefault();
       }
     };
 
