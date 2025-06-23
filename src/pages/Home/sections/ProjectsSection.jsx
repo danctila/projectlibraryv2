@@ -26,6 +26,7 @@ export default function ProjectsSection() {
   useEffect(() => {
     flickityRef.current = new Flickity(carouselRef.current, {
       cellAlign: "left",
+      autoPlay: 4000,
       contain: true,
       draggable: true,
       pageDots: false,
