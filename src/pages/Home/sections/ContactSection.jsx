@@ -80,8 +80,7 @@ export default function ContactSection() {
             variants={textVariants}
             className="text-[20px] text-[#645E6E] dark:text-[#D8D6DC] leading-[25px] w-[310px] tablet:w-[450px] desktop:w-[450px] pb-[32px]"
           >
-            Morem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-            turpis molestie, dictum est a, mattis tellus.
+            Got a question or just want to say hello? Go ahead!
           </motion.p>
           <motion.a
             href="mailto:danctilla@gmail.com"
