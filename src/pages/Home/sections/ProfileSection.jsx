@@ -48,11 +48,12 @@ import { useState, useEffect, useRef } from "react";
 // Static roles array for text animation
 const roles = [
   "student",
+  "web designer",
   "chef",
   "jazz lover",
-  "developer",
+  "software developer",
   "trumpeter",
-  "AI enthusiast",
+  "AI engineer",
 ];
 
 const textVariants = {
