@@ -53,7 +53,6 @@ const roles = [
   "jazz lover",
   "software developer",
   "trumpeter",
-  "AI engineer",
 ];
 
 const textVariants = {
