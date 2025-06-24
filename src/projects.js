@@ -1,5 +1,20 @@
 import filler from './assets/filler.jpg';
 
+// HealthMate project assets
+import healthmatevideo1 from './assets/videos/HealthMate Promo Video 1.mp4';
+import healthmatevideo2 from './assets/videos/Healthmate Promo Video 2.mp4';
+import healthmate1 from './assets/photos/HealthMate_Pic_1.webp'
+import healthmate2 from './assets/photos/HealthMate_Pic_2.webp'
+import healthmate3 from './assets/photos/HealthMate_Pic_3.webp'
+import healthmate4 from './assets/photos/HealthMate_Pic_4.webp'
+import healthmate5 from './assets/photos/HealthMate_Pic_5.webp'
+import healthmate6 from './assets/photos/HealthMate_Pic_6.webp'
+import healthmate7 from './assets/photos/HealthMate_Pic_7.webp'
+import healthmate8 from './assets/photos/HealthMate_Pic_8.webp'
+import healthmate9 from './assets/photos/HealthMate_Pic_9.webp'
+import healthmate10 from './assets/photos/HealthMate_Pic_10.webp'
+import healthmate11 from './assets/photos/HealthMate_Pic_11.webp'
+
 // PlateMate project assets
 import platemate1 from './assets/photos/PlateMate_Pic_1.webp'
 import platemate2 from './assets/photos/PlateMate_Pic_2.webp'
@@ -64,6 +79,17 @@ import blackjack1 from './assets/photos/BlackJack_Pic_1.webp'
 
 // Define and export the projects array
 const projects = [
+  
+  {
+    id: "11",
+    title: "HealthMate",
+    description: "HealthMate is a comprehensive AI-powered health application developed for the InnovAIte Hackathon, addressing the critical challenge of accessible healthcare in urban environments. The project tackles the significant problem many residents face: finding affordable, trustworthy, and nearby mental health resources and healthcare professionals.\n\n\nThe application features a sophisticated agentic AI workflow built in Botpress that guides users through an advanced conversational flow, intelligently tracking their preferences, health concerns, communication methods, and insurance/budget constraints along the way. When the preference-building process is complete, the system generates a comprehensive user payload that is sent to our custom backend infrastructure.\n\n\nThe backend leverages Retrieval-Augmented Generation (RAG) with OpenAI embeddings to perform semantic matching against a MongoDB database of vectorized medical professional profiles. This advanced AI system analyzes the user's specific needs and intelligently matches them with healthcare providers who are best suited to address their particular health issues, location requirements, and financial constraints.\n\n\nKey technical features include the Botpress agentic conversation flow for preference collection, RAG-powered semantic search using OpenAI embeddings, MongoDB vector database for medical professional storage, automated appointment booking capabilities, emergency assistance routing, and real-time healthcare provider matching. The system combines modern AI technologies with thoughtful user experience design to create a seamless healthcare navigation experience.\n\n\nHealthMate represents an interdisciplinary approach to urban healthcare challenges, combining advanced conversational AI, vector databases, and semantic search technologies with equitable design principles to create a scalable, human-centered solution that makes quality healthcare more accessible to all city residents.",
+    short_description: "AI-powered healthcare navigation platform.",
+    videos: [healthmatevideo1, healthmatevideo2],
+    images: [healthmate1, healthmate2, healthmate3, healthmate4, healthmate5, healthmate6, healthmate7, healthmate8, healthmate9, healthmate10, healthmate11],
+    technologies: ["Botpress", "OpenAI Embeddings", "RAG", "MongoDB", "Vector Database", "React", "JavaScript", "Node.js", "Conversational AI"],
+    github: "https://github.com/danctila/healthmate",
+  },
   
   {
     id: "10",
