@@ -29,7 +29,11 @@ const ProjectNavigation = () => {
 
   return (
     <nav className="top-0 left-0 w-full z-60 bg-[#FBFBFB] dark:bg-[#262329] flex items-center justify-between px-6 py-4">
-      <p className="font-neue font-bold italic dark:text-[#8A34F9] text-[#6E07F3] text-[32px]">
+      <p
+        onClick={handleBackClick}
+        className="font-neue font-bold italic dark:text-[#8A34F9] text-[#6E07F3] text-[32px] cursor-pointer"
+        aria-label="Navigate to Home"
+      >
         Dylan Anctil
       </p>
       <div className="flex flex-col items-center space-y-2 tablet:flex-row tablet:space-y-0 tablet:space-x-9 mb-0 pb-0 ">
