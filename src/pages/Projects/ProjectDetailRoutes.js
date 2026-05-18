@@ -1,4 +1,5 @@
 import { RateMyPlate } from './Detail Pages/RateMyPlate';
+import { PlateMate } from './Detail Pages/PlateMate';
 import { DuckExplorer } from './Detail Pages/DuckExplorer';
 import { MySchool } from './Detail Pages/MySchool';
 import { TTT } from './Detail Pages/TTT';
@@ -7,8 +8,11 @@ import { FactEmailer } from './Detail Pages/FactEmailer';
 import { NYU } from './Detail Pages/NYU';
 import { GameHub } from './Detail Pages/GameHub';
 import { BlackJack } from './Detail Pages/BlackJack';
+import { HealthMate } from './Detail Pages/HealthMate';
 
 export const projectDetailsMap = {
+    11: HealthMate,
+    10: PlateMate,
     9: RateMyPlate,
     8: DuckExplorer,
     7: MySchool,

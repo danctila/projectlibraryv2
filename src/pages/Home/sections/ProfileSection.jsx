@@ -3,44 +3,56 @@ import { useScroll } from "../../../Context/ScrollContext";
 import headshot from "../../../assets/headshot.webp";
 
 import { useState, useEffect, useRef } from "react";
-import Flickity from "flickity";
-import "flickity/css/flickity.css";
+// Temporarily commented out for static headshot
+// import Flickity from "flickity";
+// import "flickity/css/flickity.css";
 
-import gradCap from "../../../assets/filler.jpg";
-import chefHat from "../../../assets/filler.jpg";
-import developerHat from "../../../assets/filler.jpg";
+// import gradCap from "../../../assets/filler.jpg";
+// import chefHat from "../../../assets/filler.jpg";
+// import developerHat from "../../../assets/filler.jpg";
 
-const rolesHats = [
-  {
-    role: "student",
-    hat: gradCap,
-    position: {
-      top: "-30px",
-      left: "50%",
-      transform: "translateX(-50%)",
-      width: "100px",
-    },
-  },
-  {
-    role: "chef",
-    hat: chefHat,
-    position: {
-      top: "-30px",
-      left: "50%",
-      transform: "translateX(-50%)",
-      width: "120px",
-    },
-  },
-  {
-    role: "developer",
-    hat: developerHat,
-    position: {
-      top: "-30px",
-      left: "50%",
-      transform: "translateX(-50%)",
-      width: "110px",
-    },
-  },
+// Temporarily commented out for static headshot
+// const rolesHats = [
+//   {
+//     role: "student",
+//     hat: gradCap,
+//     position: {
+//       top: "-30px",
+//       left: "50%",
+//       transform: "translateX(-50%)",
+//       width: "100px",
+//     },
+//   },
+//   {
+//     role: "chef",
+//     hat: chefHat,
+//     position: {
+//       top: "-30px",
+//       left: "50%",
+//       transform: "translateX(-50%)",
+//       width: "120px",
+//     },
+//   },
+//   {
+//     role: "developer",
+//     hat: developerHat,
+//     position: {
+//       top: "-30px",
+//       left: "50%",
+//       transform: "translateX(-50%)",
+//       width: "110px",
+//     },
+//   },
+// ];
+
+// Static roles array for text animation
+const roles = [
+  "student",
+  "web designer",
+  "chef",
+  "jazz lover",
+  "software developer",
+  "trumpeter",
 ];
 
 const textVariants = {
@@ -59,29 +71,40 @@ const textVariants = {
 export default function ProfileSection() {
   const { activeSection } = useScroll();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const carouselRef = useRef(null);
-  const flickityInstance = useRef(null);
+  // Temporarily commented out for static headshot
+  // const carouselRef = useRef(null);
+  // const flickityInstance = useRef(null);
 
+  // Simple timer for text animation instead of carousel
   useEffect(() => {
-    if (carouselRef.current) {
-      flickityInstance.current = new Flickity(carouselRef.current, {
-        cellAlign: "center",
-        contain: true,
-        draggable: true,
-        wrapAround: true,
-        autoPlay: 3000,
-        pauseAutoPlayOnHover: true,
-        pageDots: false,
-        prevNextButtons: false,
-        percentPosition: false,
-        on: {
-          change: (index) => setCurrentIndex(index),
-        },
-      });
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % roles.length);
+    }, 2500);
 
-      return () => flickityInstance.current?.destroy();
-    }
+    return () => clearInterval(interval);
   }, []);
+
+  // Temporarily commented out Flickity initialization
+  // useEffect(() => {
+  //   if (carouselRef.current) {
+  //     flickityInstance.current = new Flickity(carouselRef.current, {
+  //       cellAlign: "center",
+  //       contain: true,
+  //       draggable: true,
+  //       wrapAround: true,
+  //       autoPlay: 3000,
+  //       pauseAutoPlayOnHover: true,
+  //       pageDots: false,
+  //       prevNextButtons: false,
+  //       percentPosition: false,
+  //       on: {
+  //         change: (index) => setCurrentIndex(index),
+  //       },
+  //     });
+
+  //     return () => flickityInstance.current?.destroy();
+  //   }
+  // }, []);
 
   return (
     <div className="relative min-h-screen flex flex-col justify-center items-center bg-[#FBFBFB] dark:bg-[#262329]">
@@ -147,7 +170,7 @@ export default function ProfileSection() {
                 transition={{ duration: 0.2 }}
                 className="inline-block font-medium text-[#6E07F3] dark:text-[#8A34F9]"
               >
-                {rolesHats[currentIndex].role}
+                {roles[currentIndex]}
               </motion.span>
             </AnimatePresence>
           </motion.p>
@@ -187,9 +210,9 @@ export default function ProfileSection() {
               transition={{ delay: 0.5 }}
             />
 
-            {/* Hat Carousel Container */}
+            {/* Temporarily commented out Hat Carousel Container */}
 
-            <div
+            {/* <div
               ref={carouselRef}
               className="profile-carousel-container absolute inset-0 z-10"
               style={{ width: "100%", height: "100%" }}
@@ -217,7 +240,7 @@ export default function ProfileSection() {
                   />
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
         </motion.div>
       </div>

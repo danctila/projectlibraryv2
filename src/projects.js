@@ -1,5 +1,30 @@
 import filler from './assets/filler.jpg';
 
+// HealthMate project assets
+import healthmatevideo1 from './assets/videos/HealthMate Promo Video 1.mp4';
+import healthmatevideo2 from './assets/videos/Healthmate Promo Video 2.mp4';
+import healthmate1 from './assets/photos/HealthMate_Pic_1.webp'
+import healthmate2 from './assets/photos/HealthMate_Pic_2.webp'
+import healthmate3 from './assets/photos/HealthMate_Pic_3.webp'
+import healthmate4 from './assets/photos/HealthMate_Pic_4.webp'
+import healthmate5 from './assets/photos/HealthMate_Pic_5.webp'
+import healthmate6 from './assets/photos/HealthMate_Pic_6.webp'
+import healthmate7 from './assets/photos/HealthMate_Pic_7.webp'
+import healthmate8 from './assets/photos/HealthMate_Pic_8.webp'
+import healthmate9 from './assets/photos/HealthMate_Pic_9.webp'
+import healthmate10 from './assets/photos/HealthMate_Pic_10.webp'
+import healthmate11 from './assets/photos/HealthMate_Pic_11.webp'
+
+// PlateMate project assets
+import platemate1 from './assets/photos/PlateMate_Pic_1.webp'
+import platemate2 from './assets/photos/PlateMate_Pic_2.webp'
+import platemate3 from './assets/photos/PlateMate_Pic_3.webp'
+import platemate4 from './assets/photos/PlateMate_Pic_4.webp'
+import platemate5 from './assets/photos/PlateMate_Pic_5.webp'
+import platemate6 from './assets/photos/PlateMate_Pic_6.webp'
+import platemate7 from './assets/photos/PlateMate_Pic_7.webp'
+import platemate8 from './assets/photos/PlateMate_Pic_8.webp'
+
 // Rate My Plate project assets
 import ratemyplatevideo from './assets/videos/RateMyPlatePromo.mp4';
 import ratemyplate1 from './assets/photos/RateMyPlate_Pic_1.webp'
@@ -54,6 +79,29 @@ import blackjack1 from './assets/photos/BlackJack_Pic_1.webp'
 
 // Define and export the projects array
 const projects = [
+  
+  {
+    id: "11",
+    title: "HealthMate",
+    description: "HealthMate is a comprehensive AI-powered health application developed for the InnovAIte Hackathon, addressing the critical challenge of accessible healthcare in urban environments. The project tackles the significant problem many residents face: finding affordable, trustworthy, and nearby mental health resources and healthcare professionals.\n\n\nThe application features a sophisticated agentic AI workflow built in Botpress that guides users through an advanced conversational flow, intelligently tracking their preferences, health concerns, communication methods, and insurance/budget constraints along the way. When the preference-building process is complete, the system generates a comprehensive user payload that is sent to our custom backend infrastructure.\n\n\nThe backend leverages Retrieval-Augmented Generation (RAG) with OpenAI embeddings to perform semantic matching against a MongoDB database of vectorized medical professional profiles. This advanced AI system analyzes the user's specific needs and intelligently matches them with healthcare providers who are best suited to address their particular health issues, location requirements, and financial constraints.\n\n\nKey technical features include the Botpress agentic conversation flow for preference collection, RAG-powered semantic search using OpenAI embeddings, MongoDB vector database for medical professional storage, automated appointment booking capabilities, emergency assistance routing, and real-time healthcare provider matching. The system combines modern AI technologies with thoughtful user experience design to create a seamless healthcare navigation experience.\n\n\nHealthMate represents an interdisciplinary approach to urban healthcare challenges, combining advanced conversational AI, vector databases, and semantic search technologies with equitable design principles to create a scalable, human-centered solution that makes quality healthcare more accessible to all city residents.",
+    short_description: "AI-powered healthcare navigation platform.",
+    videos: [healthmatevideo1, healthmatevideo2],
+    images: [healthmate1, healthmate2, healthmate3, healthmate4, healthmate5, healthmate6, healthmate7, healthmate8, healthmate9, healthmate10, healthmate11],
+    technologies: ["Botpress", "OpenAI Embeddings", "RAG", "MongoDB", "Vector Database", "React", "JavaScript", "Node.js", "Conversational AI"],
+    github: "https://github.com/danctila/healthmate",
+  },
+  
+  {
+    id: "10",
+    title: "PlateMate",
+    description: "PlateMate is a mobile application developed through Generate, Northeastern University's premier product development studio, for a real-world client aiming to improve restaurant feedback systems. Unlike typical review platforms, PlateMate allows users to rate individual dishes, enabling restaurants to receive granular, actionable insights into their menus. The app also introduces a social layer—users can discover trending meals among friends, view personalized recommendations based on their tastes and dietary restrictions, and share reviews with others.\n\n\nAs a software developer on the 10-person cross-functional team, I contributed extensively across the full stack. On the backend, I developed robust RESTful APIs in Go using the Fiber framework for core features including CRUD operations on dish reviews, updating restaurant metrics dynamically, and building custom queries like \"popular with friends\" based on user location and social graph. I also implemented backend features such as human-readable geolocation mapping and advanced filtering/sorting for search endpoints.\n\n\nOn the frontend, I built React Native components using Expo for both onboarding and review flows. This included complex form validation, navigation constraints, and dynamic screen progression tied to user data entry. I ensured full integration with our custom authentication system and MongoDB schema, including creation of new user accounts with email/username checks and error handling.\n\n\nI also implemented media handling, routing user-uploaded review images to our S3 bucket infrastructure only when full review data passed all validation checks. My work ensured smooth data flow between frontend and backend and reliable app performance on TestFlight.\n\n\nThis 3-month agile project culminated in a public showcase, following milestone events like Featurethon and Proof of Concept demos. Working on PlateMate gave me hands-on experience with system design, full-stack development, agile workflows, and user-centric product engineering for a real client.",
+    short_description: "Dish-based restaurant review app.",
+    videos: [],
+    images: [platemate1, platemate2, platemate3, platemate4, platemate5, platemate6, platemate7, platemate8],
+    technologies: ["React Native", "Expo", "JavaScript", "Zustand", "Go", "Fiber", "MongoDB", "JWT", "AWS S3", "DigitalOcean", "TestFlight"],
+    github: "https://github.com/generateNU/platemate/",
+  },
+  
   {
     id: "9",
     title: "Rate My Plate",
